@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "scripts": {
+    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+    "server": "cd server && yarn run dev",
+    "client": "cd client && yarn start",
+    "install-client": "cd client && yarn install",
+    "install-server": "cd server && yarn install",
+    "install": "concurrently \"yarn run install-server\" \"yarn run install-client\"",
+    "build-client": "cd client && yarn build",
+    "build-server": "cd server && yarn build",
+    "build": "concurrently \"yarn run build-server\" \"yarn run build-client\"",
+    "start-client": "cd client && yarn start",
+    "start-server": "cd server && yarn start",
+    "start": "concurrently \"yarn run start-server\" \"yarn run start-client\"",
+    "lint-client": "cd client && yarn run lint",
+    "lint-server": "cd server && yarn run lint",
+    "lint": "concurrently \"yarn run lint-server\" \"yarn run lint-client\"",
+    "format-client": "cd client && yarn run format",
+    "format-server": "cd server && yarn run format",
+    "format": "concurrently \"yarn run format-server\" \"yarn run format-client\""
+  }
+}
