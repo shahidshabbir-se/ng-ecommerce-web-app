@@ -8,6 +8,7 @@ node_modules/
 
 # testing
 coverage/
+migrations/
 
 # next.js
 .next/

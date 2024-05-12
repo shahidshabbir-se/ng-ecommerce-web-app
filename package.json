@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently \"yarn run server\" \"yarn run client\"",
     "server": "cd server && yarn run dev",
-    "client": "cd client && yarn start",
+    "client": "cd client && yarn run dev",
     "install-client": "cd client && yarn install",
     "install-server": "cd server && yarn install",
     "install": "concurrently \"yarn run install-server\" \"yarn run install-client\"",
