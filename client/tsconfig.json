@@ -22,9 +22,24 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
+      "@app/*": [
+        "./src/app/*"
       ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@interfaces/*": [
+        "./src/interfaces/*"
+      ],
+      "@data/*": [
+        "./src/data/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ]
     }
   },
   "include": [

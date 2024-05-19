@@ -1,0 +1,19 @@
+/* styles.css */
+.swiper-pagination-bullet {
+  --swiper-pagination-bullet-width: 0.288rem;
+  --swiper-pagination-bullet-height: 0.388rem;
+  --swiper-pagination-color: black;
+  --swiper-pagination-color-active: white;
+}
+
+.swiper-pagination-bullet-active {
+  color: #fff;
+  border-radius: 3.125rem;
+  height: 2.25rem;
+  background: black;
+}
+
+.swiper-pagination {
+  position: absolute;
+  /* */
+}

@@ -17,6 +17,7 @@ out/
 // IDE files
 .idea/
 .vscode/
+.history/
 
 # production
 build/
