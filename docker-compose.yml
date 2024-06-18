@@ -1,0 +1,57 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - '8080:8080'
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgres://postgres:password@db:5432/db
+      - PORT=8080
+    depends_on:
+      - postgres
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/healthz']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - app-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - '3000:3000'
+    environment:
+      - SERVER_URL=http://server:8080
+    depends_on:
+      - server
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:latest
+    container_name: db
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge
