@@ -1,5 +1,5 @@
 export interface productData {
-  categoryId: number
+  categoryId: number | undefined
   productId: number
 }
 

@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type {Config} from 'tailwindcss'
 
 const config: Config = {
   content: [
@@ -33,6 +33,7 @@ const config: Config = {
         'gray-700': '#2f3237',
         'gray-800': '#1d1e20',
         'gray-900': '#111213',
+        'bar-100': '#f5f5f5',
         black: '#000000',
         'red-500': '#e00034',
         'pink-500': '#e12369',
