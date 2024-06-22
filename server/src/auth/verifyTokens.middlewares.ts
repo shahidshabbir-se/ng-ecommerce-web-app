@@ -8,10 +8,10 @@ async function verifyTokens(
 ) {
   try {
     if (!accessToken && refreshToken) {
-      const decryptedData = await generateDecryptedData(
+      const decryptedData = (await generateDecryptedData(
         process.env.REFRESH_TOKEN_SECRET as string,
         refreshToken as string
-      ) as unknown as { userId: number }
+      )) as unknown as { userId: number }
       if (decryptedData.userId !== userId) {
         throw new Error('Invalid refresh token')
       }

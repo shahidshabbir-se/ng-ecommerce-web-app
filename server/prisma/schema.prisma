@@ -7,144 +7,158 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Define the database schema
-
-model category {
-  categoryId          Int       @id @default(autoincrement())
-  categoryName        String
-  categoryDescription Json?
-  parentId            Int?
-  parent              category? @relation("categoryIdToParentId", fields: [parentId], references: [categoryId])
-  children            category[] @relation("categoryIdToParentId")
-  products            product[]
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
-}
-
-model brand {
-  brandId         Int       @id @default(autoincrement())
-  brandName       String
-  brandDescription String?
-  brandImage      String?
-  products        product[] @relation("brandIdToProduct")
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-}
-
-model productVariant {
-  variantId       Int      @id @default(autoincrement())
-  productId       Int?
-  product         product? @relation(fields: [productId], references: [productId])
-  variantName     String
-  variantImage    String
-  images          String[]
-  stock           Int
-  color           String
-  size            String[]
-  @@unique([productId, variantName, color, size])
-}
-
-model review {
-  reviewId        Int       @id @default(autoincrement())
-  productId       Int?
-  userId          Int
-  rating          Float
-  product         product? @relation(fields: [productId], references: [productId])
-  comment         String
-  createdAt       DateTime  @default(now())
-  @@unique([productId, userId])
-}
-
-model product {
-  productId          Int           @id @default(autoincrement())
-  productName        String
-  productDescription String
-  categoryId         Int
-  productVariants    productVariant[]
-  reviews            review[]
-  brandId            Int
-  brand              brand        @relation("brandIdToProduct", fields: [brandId], references: [brandId])
-  averageRating      Float?
-  soldCount          Int?
-  regPrice           Float
-  salePrice          Float?
-  orders             order[]
-  productCategory    category     @relation(fields: [categoryId], references: [categoryId])
-  cartId             Int?
-  cart               cart?        @relation(fields: [cartId], references: [cartId])
-  createdAt          DateTime     @default(now())
-  updatedAt          DateTime     @updatedAt
-  wishlistId         Int?
-  wishlist           wishlist?    @relation(fields: [wishlistId], references: [wishlistId])
-  couponId           Int?
-  coupon             coupon?      @relation(fields: [couponId], references: [couponId])
-}
-
-model address {
-  addressId   Int      @id @default(autoincrement())
-  userId      Int
-  user        user     @relation(fields: [userId], references: [userId])
-  addressLine String
-  city        String
-  state       String
-  postalCode  Int
-  orderAddress order[]
-  country     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model order {
-  orderId      Int       @id @default(autoincrement())
-  userId       Int
-  products     product[]
-  orderTotal   Float
-  user         user      @relation(fields: [userId], references: [userId])
-  orderStatus  String
-  address      address   @relation(fields: [addressId], references: [addressId])
-  addressId    Int
+model User {
+  userId       Int       @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  email        String    @unique
+  password     String
+  addresses    Address[]
+  orders       Order[]
+  salt         String
+  profileImage String?
+  refreshToken String?
+  cart         Cart?
+  wishlist     Wishlist?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
 
-model user {
-  userId        Int       @id @default(autoincrement())
-  firstName     String
-  lastName      String
-  email         String    @unique
-  password      String
-  role          String
-  addresses     address[]
-  orders        order[]
-  salt          String
-  profileImage  String?
-  refreshToken  String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+model Cart {
+  cartId    Int           @id @default(autoincrement())
+  userId    Int           @unique
+  user      User          @relation(fields: [userId], references: [userId])
+  cartItems CartProduct[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
 
-model cart {
-  cartId     Int       @id @default(autoincrement())
-  userId     Int
-  products   product[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+model CartProduct {
+  cartProductId    Int      @id @default(autoincrement())
+  cartId           Int
+  cart             Cart     @relation(fields: [cartId], references: [cartId])
+  variantId        Int // Directly referencing the product variant
+  quantity         Int
+  Product          Product @relation(fields: [productId], references: [productId])
+  productId        Int
+
+  @@unique([cartId, variantId])
 }
 
-model wishlist {
-  wishlistId Int       @id @default(autoincrement())
-  userId     Int
-  products   product[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+model Product {
+  productId          Int              @id @default(autoincrement())
+  productName        String
+  productDescription Json
+  categoryId         Int
+  productVariants    ProductVariant[]
+  reviews            Review[]
+  brandId            Int
+  brand              Brand            @relation("brandIdToProduct", fields: [brandId], references: [brandId])
+  averageRating      Float?
+  soldCount          Int?
+  regPrice           Float
+  salePrice          Float?
+  orders             Order[]
+  productCategory    Category         @relation(fields: [categoryId], references: [categoryId])
+  cartProducts       CartProduct[] // Relationship to cart products
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  wishlistId         Int?
+  wishlist           Wishlist?        @relation(fields: [wishlistId], references: [wishlistId])
+  couponId           Int?
+  coupon             Coupon?          @relation(fields: [couponId], references: [couponId])
 }
 
-model coupon {
-  couponId    Int       @id @default(autoincrement())
-  couponCode  String    @unique
-  discount    Float
-  products    product[]
-  expiryDate  DateTime
+model ProductVariant {
+  variantId    Int      @id @default(autoincrement())
+  productId    Int
+  product      Product? @relation(fields: [productId], references: [productId])
+  variantName  String
+  variantImage String
+  images       String[]
+  stock        Int
+  color        String
+  size         String
+
+  @@unique([productId, variantName, color, size])
+}
+
+model Review {
+  reviewId  Int      @id @default(autoincrement())
+  productId Int?
+  userId    Int
+  rating    Float
+  product   Product? @relation(fields: [productId], references: [productId])
+  comment   String
+  createdAt DateTime @default(now())
+
+  @@unique([productId, userId])
+}
+
+model Category {
+  categoryId          Int        @id @default(autoincrement())
+  categoryName        String
+  categoryDescription Json?
+  parentId            Int?
+  parent              Category?  @relation("categoryIdToParentId", fields: [parentId], references: [categoryId])
+  children            Category[] @relation("categoryIdToParentId")
+  products            Product[]
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+}
+
+model Brand {
+  brandId          Int       @id @default(autoincrement())
+  brandName        String
+  brandDescription String?
+  brandImage       String?
+  products         Product[] @relation("brandIdToProduct")
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Address {
+  addressId    Int      @id @default(autoincrement())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [userId])
+  addressLine  String
+  city         String
+  state        String
+  postalCode   Int
+  orderAddress Order[]
+  country      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+}
+
+model Order {
+  orderId     Int       @id @default(autoincrement())
+  userId      Int
+  products    Product[]
+  orderTotal  Float
+  user        User      @relation(fields: [userId], references: [userId])
+  orderStatus String
+  address     Address   @relation(fields: [addressId], references: [addressId])
+  addressId   Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model Wishlist {
+  wishlistId Int       @id @default(autoincrement())
+  userId     Int       @unique
+  user       User      @relation(fields: [userId], references: [userId])
+  products   Product[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Coupon {
+  couponId   Int       @id @default(autoincrement())
+  couponCode String    @unique
+  discount   Float
+  products   Product[]
+  expiryDate DateTime
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
