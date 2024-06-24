@@ -24,12 +24,15 @@ export async function getProduct(req: Request, res: Response) {
         productId: true,
         productName: true,
         productDescription: true,
+        productCare: true,
         productVariants: {
           select: {
             variantId: true,
             variantName: true,
             variantImage: true,
-            images: true
+            images: true,
+            color: true,
+            size: true
           }
         },
         brand: true,
