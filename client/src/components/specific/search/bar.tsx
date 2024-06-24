@@ -1,12 +1,20 @@
 'use client'
-import React, {useState} from 'react'
+
+import React, { useState, useEffect } from 'react'
 import icons from '@data/generator/icon.generator'
 import Link from 'next/link'
+import { useSearchVisibilityStore } from '@store/index'
 
 export default function Bar() {
+  const handleSearchBarVisibility = useSearchVisibilityStore(
+    (state) => state.setSearchBarVisibility
+  )
+  const searchBarVisibility = useSearchVisibilityStore(
+    (state) => state.searchBarVisibility
+  )
   const [searchQuery, setSearchQuery] = useState('')
 
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const trimmedQuery = searchQuery.trim()
@@ -18,39 +26,70 @@ export default function Bar() {
     console.log('Searching for:', trimmedQuery)
   }
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
   }
 
-  const handleClearSearch = () => {
-    setSearchQuery('')
+  const handleClickOutside = (e: MouseEvent) => {
+    const searchBarElement = document.querySelector('.search-bar')
+    if (searchBarElement && !searchBarElement.contains(e.target as Node)) {
+      handleSearchBarVisibility(false)
+    }
   }
 
+  useEffect(() => {
+    if (searchBarVisibility) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [searchBarVisibility])
+
   return (
-    <div className='fixed right-0 top-0 z-[2000] h-screen w-screen bg-white'>
-      <div className='flex gap-3 bg-bar-100'>
-        <form>
-          <Link href={`/results?search_query=${encodeURIComponent(searchQuery)}`}>
-            <icons.search/>
-          </Link>
-          <input
-            type='text'
-            placeholder='Search...'
-            value={searchQuery}
-            onChange={handleInputChange}
-          />
-          <button type='button' onClick={handleClearSearch}>
-            <icons.cross/>
-          </button>
-        </form>
-        {/* Use Link to navigate to results page */}
-        {/*<Link*/}
-        {/*  to={`/results?search_query=${encodeURIComponent(searchQuery)}`}*/}
-        {/*  className='hidden'*/}
-        {/*>*/}
-        {/*  Go to Results*/}
-        {/*</Link>*/}
+    <>
+      <div
+        className={`search-bar fixed right-0 top-0 z-[2000] h-screen w-[540px] transition duration-300 ${
+          searchBarVisibility ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className='relative z-[100] flex gap-3 bg-bar-100 p-[9px]'>
+          <form
+            className='flex h-[42px] w-full items-center border-b'
+            onSubmit={handleSearch}
+          >
+            <Link
+              className='flex size-9 items-center'
+              href={`/results?search_query=${encodeURIComponent(searchQuery)}`}
+            >
+              <icons.search className='size-6' />
+            </Link>
+            <input
+              className='h-full w-full bg-transparent text-lg placeholder-black outline-none'
+              type='text'
+              placeholder='search'
+              value={searchQuery}
+              onChange={handleInputChange}
+            />
+            <button
+              className='flex size-9 items-center justify-end'
+              type='button'
+              onClick={() => handleSearchBarVisibility(false)}
+            >
+              <icons.cross className='size-6' />
+            </button>
+          </form>
+        </div>
+        <div className='relative z-[100] h-full bg-white px-[18px] py-5'>
+          <h1 className='text-lg'>Popular</h1>
+        </div>
       </div>
-    </div>
+      {searchBarVisibility && (
+        <div className='fixed left-0 top-0 z-[50] h-screen w-screen bg-gray-500 opacity-65 duration-300'></div>
+      )}
+    </>
   )
 }

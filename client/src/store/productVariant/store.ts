@@ -1,4 +1,4 @@
-import create from 'zustand'
+import {create} from 'zustand'
 import { ProductState } from './types'
 
 const useProductsStore = create<ProductState>((set) => ({

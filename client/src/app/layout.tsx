@@ -22,7 +22,7 @@ export default function RootLayout({
         <link rel='icon' href='/favicon.svg' type='image/x-icon' />
       </head>
       <body>
-        {/* <Navbar serverLogo={serverLogo} /> */}
+        <Navbar serverLogo={serverLogo} />
         {children}
       </body>
     </html>
