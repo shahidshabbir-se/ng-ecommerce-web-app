@@ -48,7 +48,8 @@ model CartProduct {
 model Product {
   productId          Int              @id @default(autoincrement())
   productName        String
-  productDescription Json
+  productDescription String
+  productCare        String
   categoryId         Int
   productVariants    ProductVariant[]
   reviews            Review[]
@@ -78,7 +79,7 @@ model ProductVariant {
   images       String[]
   stock        Int
   color        String
-  size         String
+  size         String[]
 
   @@unique([productId, variantName, color, size])
 }

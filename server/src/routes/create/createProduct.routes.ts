@@ -7,6 +7,7 @@ export async function createProduct(req: Request, res: Response) {
     const {
       productName,
       productDescription,
+      productCare,
       categoryId,
       regPrice,
       salePrice,
@@ -19,9 +20,11 @@ export async function createProduct(req: Request, res: Response) {
     if (
       !productName ||
       !productDescription ||
+      !productCare ||
       !categoryId ||
       !regPrice ||
       !brandId ||
+      !productVariants ||
       !productVariants.length
     ) {
       return res.status(400).json({
@@ -64,6 +67,7 @@ export async function createProduct(req: Request, res: Response) {
       data: {
         productName,
         productDescription,
+        productCare,
         regPrice,
         salePrice,
         averageRating: 0, // Initial value, can be adjusted
