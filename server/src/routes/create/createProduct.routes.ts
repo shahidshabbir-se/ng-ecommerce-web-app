@@ -80,7 +80,6 @@ export async function createProduct(req: Request, res: Response) {
         productVariants: {
           create: productVariants.map((variant) => ({
             variantName: variant.variantName,
-            variantImage: variant.variantImage,
             stock: variant.stock,
             color: variant.color,
             size: variant.size

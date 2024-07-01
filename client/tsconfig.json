@@ -42,6 +42,9 @@
       ],
       "@store/*": [
         "./src/store/*"
+      ],
+      "@middlewares/*": [
+        "./src/middlewares/*"
       ]
     }
   },
@@ -50,7 +53,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/product/page.tsx"
+    "src/app/product/page.tsx",
+    "src/app/results/page.jsx"
   ],
   "exclude": [
     "node_modules"

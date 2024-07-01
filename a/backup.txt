@@ -1,0 +1,107 @@
+import React from 'react'
+import { getSearchQuery } from '@services/getSearchQuery.services'
+import { getProductsByTerm } from '@utils/search/wildSearchProducts.utils'
+import { ResultData, UniqueFilters } from '@interfaces/results.interface'
+import ProductGrid from './productGrid'
+import ProductFilter from './productFilter'
+import ProductSort from './productSort'
+import LoadingCard from '@components/specific/result/loadingCard'
+import LoadingBar from '@components/specific/result/loadingBar'
+
+const barStyles = [
+  { width: 100, height: 40, py: 8 },
+  { width: 150, height: 40, py: 8 },
+  { width: 75, height: 40, py: 8 },
+  { width: 175, height: 40, py: 8 },
+  { width: 65, height: 40, py: 8 },
+  { width: 100, height: 40, py: 8 },
+  { width: 150, height: 40, py: 8 },
+  { width: 75, height: 40, py: 8 }
+]
+
+const Results = async () => {
+  let query = getSearchQuery()
+  let loading = true
+  let startPoint = 0
+  let fetchedData: ResultData[] = await getProductsByTerm(query, startPoint)
+
+  if (fetchedData) {
+    loading = false
+  }
+
+  const aggregateUniqueFilters = (products: ResultData[]) => {
+    const sizes = new Set<string>()
+    const categories = new Set<string>()
+    const brands = new Set<string>()
+    products.forEach((product) => {
+      product.productVariants.forEach((variant) => {
+        variant.size.forEach((size) => {
+          sizes.add(size)
+        })
+      })
+    })
+    products.forEach((product) => {
+      categories.add(product.categoryName)
+    })
+    products.forEach((product) => {
+      brands.add(product.brandName)
+    })
+    const uniqueFilters: UniqueFilters = {
+      sizes,
+      categories,
+      brands
+    }
+    return uniqueFilters
+  }
+
+  return (
+    <>
+      <div className='flex flex-col items-center py-8'>
+        <p>Search Results For</p>
+        <strong className='font-extraBold text-[20px]'>{query}</strong>
+      </div>
+      <div className='mx-5 flex flex-row justify-center pt-2'>
+        {loading ? (
+          <div className='mr-8 translate-x-full md:translate-x-0'>
+            {barStyles.map((style, index) => (
+              <div
+                key={index}
+                className='flex justify-between border-b border-solid border-gray-100 py-2'
+              >
+                <LoadingBar
+                  width={style.width}
+                  height={style.height}
+                  py={style.py}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <ProductFilter Filter={aggregateUniqueFilters(fetchedData)} />
+        )}
+        {loading ? (
+          <div className='relative w-full max-w-[900px]'>
+            <div className='mb-4 mr-2 flex items-end justify-between md:items-center md:justify-end'>
+              <div className='md:hidden'>
+                <LoadingBar width={100} height={36} py={8} />
+              </div>
+              <LoadingBar width={148.5} height={36} py={8} />
+            </div>
+            <div className='width-full grid grid-cols-2 gap-x-5 gap-y-10 md:gap-x-2 lg:grid-cols-4'>
+              {Array.from({ length: 8 }, (_, index) => (
+                <LoadingCard key={index} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className='flex flex-col w-full max-w-[900px]'>
+              <ProductSort />
+            <ProductGrid products={fetchedData} />
+          </div>
+        )}
+      </div>
+    </>
+  )
+}
+
+export default Results

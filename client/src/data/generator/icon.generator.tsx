@@ -5,6 +5,7 @@ import { LiaUserSolid } from 'react-icons/lia'
 import { GoHomeFill } from 'react-icons/go'
 import { IoCloseOutline } from 'react-icons/io5'
 import { FaChevronDown } from 'react-icons/fa6'
+import { IoFilterSharp } from 'react-icons/io5'
 
 const icons = {
   cart: CiShoppingCart,
@@ -13,7 +14,8 @@ const icons = {
   user: LiaUserSolid,
   chevron: FaChevronDown,
   home: GoHomeFill,
-  cross: IoCloseOutline
+  cross: IoCloseOutline,
+  filter: IoFilterSharp
 }
 
 export default icons

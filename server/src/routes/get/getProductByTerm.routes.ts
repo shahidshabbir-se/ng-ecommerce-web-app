@@ -44,7 +44,7 @@ export async function getProductByTerm(req: Request, res: Response) {
               select: {
                 variantId: true,
                 variantName: true,
-                variantImage: true
+                images: true
               }
             }
           }
@@ -75,7 +75,7 @@ export async function getProductByTerm(req: Request, res: Response) {
             select: {
               variantId: true,
               variantName: true,
-              variantImage: true
+              images: true
             }
           }
         }
