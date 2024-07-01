@@ -12,7 +12,7 @@ import {
 } from './auth/verifyUser.routes'
 import { getCartItems } from './get/getCart.routes'
 import { updateOrAddCartItem } from './add/addCart.routes'
-// import { removeCartItem } from './del/delCart.routes'
+import { getProductsByTerm } from '@routes/get/getProductsByTerm.routes'
 
 const router = Router()
 
@@ -34,6 +34,8 @@ router.post(`${product_route}/createProduct`, createProduct)
 router.get(`${category_route}/getCategory/:id`, getCategory)
 // create category
 router.post(`${category_route}/createCategory`, createCategory)
+// get category by search term
+router.get(`${category_route}/getProductsByTerm`, getProductsByTerm)
 
 /* --------------- userRoutes --------------- */
 // create user

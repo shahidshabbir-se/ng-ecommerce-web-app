@@ -1,4 +1,4 @@
-import { UsedIcon } from '../../interfaces/navBar.interfaces'
+import { UsedIcon } from '@interfaces/navBar.interfaces'
 
 export const usedIcons: UsedIcon[] = [
   {

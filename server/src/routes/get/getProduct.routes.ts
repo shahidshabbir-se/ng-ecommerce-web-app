@@ -29,7 +29,6 @@ export async function getProduct(req: Request, res: Response) {
           select: {
             variantId: true,
             variantName: true,
-            variantImage: true,
             images: true,
             color: true,
             size: true

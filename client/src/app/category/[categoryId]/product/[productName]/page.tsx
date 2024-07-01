@@ -7,7 +7,7 @@ import getProduct from '@utils/product/getProduct.utils'
 import { productData } from '@interfaces/getProductData.interfaces'
 import Variants from './variants'
 import ProductImages from './productImages'
-import BreadCrumbs from '@components/specific/product_page/breadCrumbs'
+import BreadCrumbs from '@components/specific/productPage/breadCrumbs'
 
 const breadCrumbs = ['Home', 'Shoes', 'Heels', 'Real Suede Studded Clogs']
 
