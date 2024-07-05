@@ -37,13 +37,15 @@ model CartProduct {
   cartProductId    Int      @id @default(autoincrement())
   cartId           Int
   cart             Cart     @relation(fields: [cartId], references: [cartId])
-  variantId        Int // Directly referencing the product variant
+  variantId        Int
+  size             String
   quantity         Int
   Product          Product @relation(fields: [productId], references: [productId])
   productId        Int
 
-  @@unique([cartId, variantId])
+  @@unique([cartId, productId, variantId, size])
 }
+
 
 model Product {
   productId          Int              @id @default(autoincrement())

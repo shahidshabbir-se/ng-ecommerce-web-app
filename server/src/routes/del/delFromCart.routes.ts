@@ -1,19 +1,17 @@
 import { Response, Request } from 'express'
 import { prisma } from '@configs/prisma.config'
 
-export async function removeCartItem(req: Request, res: Response) {
+export async function delFromCart(req: Request, res: Response) {
   try {
-    const { userId, productId, quantity } = req.body
-    if (
-      !userId ||
-      !productId ||
-      isNaN(userId) ||
-      isNaN(productId) ||
-      isNaN(quantity)
-    ) {
-      return res.status(400).json({
-        message: 'User ID and Product ID are required and must be numbers'
-      })
+    const { userId, variantId, size } = req.body
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required' })
+    }
+    if (!variantId) {
+      return res.status(400).json({ message: 'Variant ID is required' })
+    }
+    if (!size) {
+      return res.status(400).json({ message: 'Size is required' })
     }
 
     // Check if the cart for the user exists
@@ -22,7 +20,7 @@ export async function removeCartItem(req: Request, res: Response) {
         userId: userId
       },
       include: {
-        products: true
+        cartItems: true
       }
     })
 
@@ -33,18 +31,34 @@ export async function removeCartItem(req: Request, res: Response) {
     }
 
     // Check if the product exists in the cart
-    const cartProduct = cart.products.find((cp) => cp.productId === productId)
+    const cartProduct = await prisma.cartProduct.findFirst({
+      where: {
+        cartId: cart.cartId,
+        variantId: variantId,
+        size: size
+      }
+    })
 
     if (!cartProduct) {
       return res.status(404).json({ message: 'Product not found in the cart' })
     }
 
     // Product exists in the cart, delete it
-    await prisma.cartProduct.update({
+    await prisma.cartProduct.delete({
       where: {
         cartProductId: cartProduct.cartProductId
+      }
+    })
+
+    await prisma.productVariant.update({
+      where: {
+        variantId: variantId
       },
-      data: { quantity: { decrement: quantity } }
+      data: {
+        stock: {
+          increment: cartProduct.quantity
+        }
+      }
     })
 
     return res.json({ message: 'Product removed from the cart' })
