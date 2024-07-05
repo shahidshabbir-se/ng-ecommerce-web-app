@@ -5,109 +5,142 @@ const prisma = new PrismaClient()
 
 export async function updateOrAddCartItem(req: Request, res: Response) {
   try {
-    const { userId, variantId, quantity } = req.body
+    const { userId, productId, quantity, variantId, size } = req.body
 
     // Validate incoming data
-    if (
-      !userId ||
-      !variantId ||
-      !quantity ||
-      isNaN(userId) ||
-      isNaN(variantId) ||
-      isNaN(quantity)
-    ) {
-      return res.status(400).json({
-        message:
-          'User ID, Variant ID, and Quantity are required and must be numbers'
-      })
+    if (!userId) {
+      return res.status(400).json({ message: 'Please Login or Register' })
+    }
+
+    if (!productId || !quantity || !variantId || !size) {
+      return res.status(400).json({ message: 'Missing required fields' })
+    }
+    if (quantity <= 0) {
+      return res
+        .status(400)
+        .json({ message: 'Quantity must be greater than 0' })
     }
 
     // Check if the user exists
     const user = await prisma.user.findUnique({
-      where: {
-        userId: userId
-      }
+      where: { userId }
     })
-
     if (!user) {
-      return res.status(404).json({
-        message: 'User not found for the given userId'
-      })
+      return res.status(404).json({ message: 'User not found' })
     }
 
-    // Find the product variant and check stock availability
-    const productVariant = await prisma.productVariant.findUnique({
-      where: {
-        variantId: variantId
-      }
+    // Check if the cart exists
+    let cart = await prisma.cart.findUnique({
+      where: { userId },
+      include: { cartItems: true }
+    })
+
+    // Product variant and stock check
+    const productVariant = await prisma.productVariant.findFirst({
+      where: { productId, variantId }
     })
 
     if (!productVariant) {
-      return res.status(404).json({
-        message: 'Product variant not found for the given variantId'
-      })
+      return res.status(404).json({ message: 'Product variant not found' })
     }
 
-    if (productVariant.stock < quantity) {
-      return res.status(400).json({
-        message: 'Insufficient stock for the requested quantity'
-      })
-    }
-
-    // Find or create cart
-    let cart = await prisma.cart.findUnique({
-      where: {
-        userId: userId
-      },
-      include: {
-        cartItems: true
-      }
-    })
-
+    // If cart doesn't exist, create a new cart
     if (!cart) {
-      // Create a new cart for the user
+      if (productVariant?.stock ?? 0 < quantity) {
+        return res.status(400).json({ message: 'Insufficient stock' })
+      }
+
       cart = await prisma.cart.create({
         data: {
-          userId: userId,
+          userId,
           cartItems: {
             create: {
-              variantId: variantId,
-              quantity: quantity,
-              productId: productVariant.productId
+              productId,
+              quantity,
+              variantId,
+              size
             }
           }
         },
         include: { cartItems: true }
       })
 
-      return res.status(201).json(cart)
+      // Update product variant stock
+      await prisma.productVariant.update({
+        where: { variantId },
+        data: { stock: { decrement: quantity } }
+      })
+
+      return res
+        .status(201)
+        .json({ message: 'Cart item added', cartItem: cart.cartItems[0] })
     }
 
-    // Check if the product already exists in the user's cart
-    const existingCartProduct = cart.cartItems.find(
-      (cp) => cp.variantId === variantId
+    // Check if the product already exists in the cart
+    const existingCartItem = cart.cartItems.find(
+      (cp) =>
+        cp.productId === productId &&
+        cp.variantId === variantId &&
+        cp.size === size
     )
 
-    if (existingCartProduct) {
-      return res.status(400).json({
-        message:
-          "Product variant already exists in the user's cart. Use a different endpoint to update the quantity."
-      })
-    } else {
-      // Add new product to the existing cart
-      const newCartProduct = await prisma.cartProduct.create({
+    if (!existingCartItem) {
+      // Add new cart item
+      if (!productVariant || productVariant.stock < quantity) {
+        return res.status(400).json({ message: 'Insufficient stock' })
+      }
+      const newCartItem = await prisma.cartProduct.create({
         data: {
           cartId: cart.cartId,
-          variantId: variantId,
-          quantity: quantity,
-          productId: productVariant.productId
+          productId,
+          quantity,
+          variantId,
+          size
         }
       })
 
-      return res.status(201).json(newCartProduct)
+      // Update product variant stock
+      await prisma.productVariant.update({
+        where: { variantId },
+        data: { stock: { decrement: quantity } }
+      })
+
+      return res
+        .status(201)
+        .json({ message: 'Cart item added', cartItem: newCartItem })
     }
+
+    if (existingCartItem.quantity === quantity) {
+      return res.status(200).json({
+        message: 'Cart item quantity is the same',
+        cartItem: existingCartItem
+      })
+    }
+
+    // Update existing cart item if quantity is different
+    if (
+      !productVariant ||
+      productVariant.stock + existingCartItem.quantity < quantity
+    ) {
+      return res.status(400).json({ message: 'Insufficient stock' })
+    }
+    const totalStock = productVariant.stock + existingCartItem.quantity
+
+    const updatedCartItem = await prisma.cartProduct.update({
+      where: { cartProductId: existingCartItem.cartProductId },
+      data: { quantity }
+    })
+
+    await prisma.productVariant.update({
+      where: { variantId },
+      data: { stock: totalStock - quantity }
+    })
+
+    return res
+      .status(200)
+      .json({ message: 'Cart item updated', cartItem: updatedCartItem })
   } catch (error) {
-    console.error('Error adding cart item:', error)
-    return res.status(500).json({ message: 'Error adding cart item' })
+    console.error('Error adding or updating cart item:', error)
+    return res.status(500).json({ message: 'Internal server error' })
   }
 }
