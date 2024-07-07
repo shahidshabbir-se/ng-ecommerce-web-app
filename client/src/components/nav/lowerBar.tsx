@@ -1,13 +1,18 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import icons from '@data/generator/icon.generator'
 import { useSearchVisibilityStore } from '@store/index'
+import { useAuthAsideVisibilityStore } from '@store/index'
 
 export const LowerBar = () => {
   const handleSearchBarVisibility = useSearchVisibilityStore(
     (state) => state.setSearchBarVisibility
   )
+  const handleAuthAsideVisibility = useAuthAsideVisibilityStore(
+    (state) => state.setAuthAsideVisibility
+  )
+
   return (
     <div>
       <div>
@@ -24,12 +29,12 @@ export const LowerBar = () => {
           >
             <icons.search />
           </button>
-          <Link
-            href={'/'}
+          <button
+            onClick={() => handleAuthAsideVisibility(true)}
             className='white size-[38px] rounded-full bg-white p-1 opacity-85'
           >
             <icons.user />
-          </Link>
+          </button>
         </div>
       </div>
     </div>

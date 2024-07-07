@@ -56,7 +56,7 @@ export default function Bar() {
   return (
     <>
       <div
-        className={`search-bar fixed right-0 top-0 z-[2000] h-screen w-[540px] transition duration-300 ${
+        className={`search-bar fixed right-0 top-0 z-[2000] h-screen w-96 transition duration-300 ${
           searchBarVisibility ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -94,9 +94,7 @@ export default function Bar() {
       {searchBarVisibility && (
         <div
           className={`fixed left-0 top-0 flex h-screen w-screen items-center justify-center ${loading ? 'z-[2000] bg-gray-500' : 'z-[50] bg-gray-500  opacity-65 duration-300'}`}
-        >
-          {loading && <p>Loading ...</p>}
-        </div>
+        />
       )}
     </>
   )

@@ -8,6 +8,8 @@ import { FaChevronDown } from 'react-icons/fa6'
 import { IoFilterSharp } from 'react-icons/io5'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { AiOutlineMinus } from 'react-icons/ai'
+import { FcGoogle } from "react-icons/fc";
+
 const icons = {
   cart: CiShoppingCart,
   search: IoIosSearch,
@@ -18,7 +20,8 @@ const icons = {
   cross: IoCloseOutline,
   filter: IoFilterSharp,
   plus: AiOutlinePlus,
-  minus: AiOutlineMinus
+  minus: AiOutlineMinus,
+  google: FcGoogle
 }
 
 export default icons
