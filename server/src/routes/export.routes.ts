@@ -12,7 +12,8 @@ import {
 } from './auth/verifyUser.routes'
 import { getCartItems } from './get/getCart.routes'
 import { updateOrAddCartItem } from './add/addCart.routes'
-// import { removeCartItem } from './del/delCart.routes'
+import { getProductsByTerm } from '@routes/get/getProductsByTerm.routes'
+import {delFromCart} from '@routes/del/delFromCart.routes'
 
 const router = Router()
 
@@ -34,12 +35,14 @@ router.post(`${product_route}/createProduct`, createProduct)
 router.get(`${category_route}/getCategory/:id`, getCategory)
 // create category
 router.post(`${category_route}/createCategory`, createCategory)
+// get category by search term
+router.get(`${category_route}/getProductsByTerm`, getProductsByTerm)
 
 /* --------------- userRoutes --------------- */
 // create user
 router.post(`${user_route}/createUser`, createUser)
 // verify user by credentials
-router.get(`${user_route}/verify_by_credentials`, verifyUserByCredentials)
+router.post(`${user_route}/verify_by_credentials`, verifyUserByCredentials)
 // verify user by token
 router.get(`${user_route}/verify_by_token`, verifyUserFromToken)
 
@@ -49,7 +52,7 @@ router.get(`${cart_route}/getCartItems`, getCartItems)
 // add item to cart
 router.post(`${cart_route}/updateOrAddCartItem`, updateOrAddCartItem)
 // remove item from cart
-// router.delete(`${cart_route}/removeCartItem`, removeCartItem)
+router.post(`${cart_route}/delFromCart`, delFromCart)
 
 /* --------------- brandRoutes --------------- */
 // create brand
