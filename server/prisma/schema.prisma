@@ -37,18 +37,21 @@ model CartProduct {
   cartProductId    Int      @id @default(autoincrement())
   cartId           Int
   cart             Cart     @relation(fields: [cartId], references: [cartId])
-  variantId        Int // Directly referencing the product variant
+  variantId        Int
+  size             String
   quantity         Int
   Product          Product @relation(fields: [productId], references: [productId])
   productId        Int
 
-  @@unique([cartId, variantId])
+  @@unique([cartId, productId, variantId, size])
 }
+
 
 model Product {
   productId          Int              @id @default(autoincrement())
   productName        String
-  productDescription Json
+  productDescription String
+  productCare        String
   categoryId         Int
   productVariants    ProductVariant[]
   reviews            Review[]
@@ -74,11 +77,10 @@ model ProductVariant {
   productId    Int
   product      Product? @relation(fields: [productId], references: [productId])
   variantName  String
-  variantImage String
   images       String[]
   stock        Int
   color        String
-  size         String
+  size         String[]
 
   @@unique([productId, variantName, color, size])
 }
@@ -98,7 +100,7 @@ model Review {
 model Category {
   categoryId          Int        @id @default(autoincrement())
   categoryName        String
-  categoryDescription Json?
+  categoryDescription String?
   parentId            Int?
   parent              Category?  @relation("categoryIdToParentId", fields: [parentId], references: [categoryId])
   children            Category[] @relation("categoryIdToParentId")

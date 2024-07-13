@@ -39,7 +39,19 @@
       ],
       "@services/*": [
         "./src/services/*"
-      ]
+      ],
+      "@store/*": [
+        "./src/store/*"
+      ],
+      "@middlewares/*": [
+        "./src/middlewares/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@icons": [
+        "./src/icons.tsx"
+      ],
     }
   },
   "include": [
@@ -47,7 +59,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/product/page.tsx"
+    "src/app/product/page.tsx",
+    "src/app/results/page.jsx",
+    "src/components/auth/index.txy"
   ],
   "exclude": [
     "node_modules"

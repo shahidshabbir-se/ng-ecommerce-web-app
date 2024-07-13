@@ -6,7 +6,6 @@ export interface productData {
 export interface productVariantFromSearch {
   variantId: number
   variantName: string
-  variantImage: string | null
 }
 
 export interface productFromSearch {
@@ -20,6 +19,7 @@ export interface productFromSearch {
 export interface ProductDataInput {
   productName: string
   productDescription: string
+  productCare: string
   categoryId: number
   regPrice: number
   salePrice: number | null
@@ -42,11 +42,10 @@ export interface productVariant {
   variantId: number
   productId: number
   variantName: string
-  variantImage: string
   images: string[]
   stock: number
   color: string
-  size: string
+  size: string[]
 }
 
 export interface brand {
