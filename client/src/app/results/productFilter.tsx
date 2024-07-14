@@ -384,7 +384,7 @@ export default ProductFilter
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
-import icons from '@data/generator/icon.generator'
+import icons from '@icons'
 
 interface AccordionTemplateProps {
   title: string

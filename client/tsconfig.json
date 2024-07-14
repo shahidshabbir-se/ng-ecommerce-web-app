@@ -45,7 +45,13 @@
       ],
       "@middlewares/*": [
         "./src/middlewares/*"
-      ]
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@icons": [
+        "./src/icons.tsx"
+      ],
     }
   },
   "include": [
@@ -54,7 +60,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/product/page.tsx",
-    "src/app/results/page.jsx"
+    "src/app/results/page.jsx",
+    "src/components/auth/index.txy"
   ],
   "exclude": [
     "node_modules"

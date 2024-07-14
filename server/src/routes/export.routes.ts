@@ -13,7 +13,7 @@ import {
 import { getCartItems } from './get/getCart.routes'
 import { updateOrAddCartItem } from './add/addCart.routes'
 import { getProductsByTerm } from '@routes/get/getProductsByTerm.routes'
-import {delFromCart} from '@routes/del/delFromCart.routes'
+import { delFromCart } from '@routes/del/delFromCart.routes'
 
 const router = Router()
 
@@ -42,7 +42,7 @@ router.get(`${category_route}/getProductsByTerm`, getProductsByTerm)
 // create user
 router.post(`${user_route}/createUser`, createUser)
 // verify user by credentials
-router.get(`${user_route}/verify_by_credentials`, verifyUserByCredentials)
+router.post(`${user_route}/verify_by_credentials`, verifyUserByCredentials)
 // verify user by token
 router.get(`${user_route}/verify_by_token`, verifyUserFromToken)
 

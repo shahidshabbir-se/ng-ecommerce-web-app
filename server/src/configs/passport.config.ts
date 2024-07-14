@@ -33,7 +33,7 @@ passport.use(
               "Incorrect password. Please ensure you've entered the correct password."
           })
         }
-        return done(null, user.userId)
+        return done(null, user)
       } catch (err) {
         return done(err)
       }
