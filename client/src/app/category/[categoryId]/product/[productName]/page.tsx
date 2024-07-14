@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState, ChangeEvent } from 'react'
 import { Fragment } from 'react'
-import icons from '@data/generator/icon.generator'
+import icons from '@icons'
 import AccordionUsage from './accordion'
 import getProduct from '@utils/product/getProduct.utils'
 import { productData } from '@interfaces/getProductData.interfaces'
@@ -280,7 +280,7 @@ const ProductPage = () => {
                         value={quantity}
                         onChange={handleQuantity}
                         type='tel'
-                        className='size-[40px] border-y border-gray-400 text-center text-black outline-none text-xl'
+                        className='size-[40px] border-y border-gray-400 text-center text-xl text-black outline-none'
                       />
                       <button
                         onClick={handleIncrement}

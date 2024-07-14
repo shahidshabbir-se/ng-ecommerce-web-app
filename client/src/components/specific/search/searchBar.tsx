@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import icons from '@data/generator/icon.generator'
+import icons from '@icons'
 import Link from 'next/link'
 import { useSearchVisibilityStore } from '@store/index'
 import { useRouter } from 'next/navigation'
 
-export default function Bar() {
+export default function SearchBar() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const handleSearchBarVisibility = useSearchVisibilityStore(
@@ -93,8 +93,10 @@ export default function Bar() {
       </div>
       {searchBarVisibility && (
         <div
-          className={`fixed left-0 top-0 flex h-screen w-screen items-center justify-center ${loading ? 'z-[2000] bg-gray-500' : 'z-[50] bg-gray-500  opacity-65 duration-300'}`}
-        />
+          className={`fixed left-0 top-0 flex h-screen w-screen items-center bg-gray-500/65 z-[1999] duration-500`}
+        >
+          {loading && <p>Loading ...</p>}
+        </div>
       )}
     </>
   )

@@ -1,20 +1,20 @@
-import { CiShoppingCart } from 'react-icons/ci'
-import { IoIosSearch } from 'react-icons/io'
-import { IoIosHeartEmpty } from 'react-icons/io'
-import { LiaUserSolid } from 'react-icons/lia'
+import { PiShoppingBagThin } from 'react-icons/pi'
+import { CiSearch } from 'react-icons/ci'
+import { PiHeartThin } from 'react-icons/pi'
+import { PiUserThin } from 'react-icons/pi'
 import { GoHomeFill } from 'react-icons/go'
 import { IoCloseOutline } from 'react-icons/io5'
 import { FaChevronDown } from 'react-icons/fa6'
 import { IoFilterSharp } from 'react-icons/io5'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { AiOutlineMinus } from 'react-icons/ai'
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle } from 'react-icons/fc'
 
 const icons = {
-  cart: CiShoppingCart,
-  search: IoIosSearch,
-  heart: IoIosHeartEmpty,
-  user: LiaUserSolid,
+  cart: PiShoppingBagThin,
+  search: CiSearch,
+  heart: PiHeartThin,
+  user: PiUserThin,
   chevron: FaChevronDown,
   home: GoHomeFill,
   cross: IoCloseOutline,

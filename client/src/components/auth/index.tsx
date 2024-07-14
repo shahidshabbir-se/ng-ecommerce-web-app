@@ -4,7 +4,7 @@ import { useAuthAsideVisibilityStore } from '@store/index'
 import { Fragment, useState,useEffect } from 'react'
 import Sidebar from './sidebar'
 import { authState } from '@interfaces/auth.interfaces'
-import icons from '@data/generator/icon.generator'
+import icons from '@icons'
 
 const Index = () => {
   const [authState, setAuthState] = useState<authState>({
@@ -34,12 +34,12 @@ const Index = () => {
   return (
     <Fragment>
       {authAsideVisibility && (
-        <div className='translate-transform absolute top-0 z-[60] h-screen w-screen bg-gray-500/65 duration-500' />
+        <div className='translate-transform absolute top-0 z-[1999] h-screen w-screen bg-gray-500/65 duration-500' />
       )}
       <div
         className={`${
           authAsideVisibility ? 'translate-x-0' : 'translate-x-full'
-        } fixed left-0 top-0 z-[70] h-screen w-screen
+        } fixed left-0 top-0 z-[2000] h-screen w-screen
             transform transition-transform duration-500`}
       >
         <div ref={ref}>
@@ -57,7 +57,7 @@ const Index = () => {
                   : authState.currentState === 'register'
                     ? 'bottom-[550px]'
                     : 'bottom-[350px]'
-              } md:translate-r-[23.5rem] absolute left-1/2 z-[90] size-10 -translate-x-1/2 rounded-full bg-white md:left-[calc(100%-25.5rem)] md:top-3 md:size-8`}
+              } md:translate-r-[23.5rem] absolute left-1/2 z-[90] size-10 -translate-x-1/2 bg-white md:left-[calc(100%-25.5rem)] md:top-2 md:size-8`}
             />
             {/* TODO: 
             1.icon position on register and login component rendering

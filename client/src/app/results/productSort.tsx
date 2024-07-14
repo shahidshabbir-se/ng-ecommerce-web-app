@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ResultData } from '@interfaces/results.interface'
 import { useResultStore } from '@store/results/store'
 import { sortProduct } from '@middlewares/sortProduct'
-import icons from '@data/generator/icon.generator'
+import icons from '@icons'
 
 interface ProductSortOptions {
   name: string
@@ -34,15 +34,15 @@ const ProductSort = () => {
   }
 
   return (
-    <div className='my-4 flex flex-row items-center justify-between md:justify-end gap-[10px] md:mt-0'>
+    <div className='my-4 flex flex-row items-center justify-between gap-[10px] md:mt-0 md:justify-end'>
       <div className='mr-[8px] flex h-[40px] w-[50%] cursor-pointer flex-row items-center border border-solid border-black pl-2 text-[14px] font-light tracking-wide hover:no-underline md:hidden'>
         <icons.filter className='mr-2 size-6' />
         <span>Filter</span>
       </div>
-      <div className='w-[50%] relative md:w-auto flex items-center'>
+      <div className='relative flex w-[50%] items-center md:w-auto'>
         <icons.chevron className='pointer-events-none absolute right-0 mr-2' />
         <select
-          className='md:focus:outline-auto h-[40px] w-full appearance-none rounded-none border border-solid border-black bg-white p-1 pr-0 md:text-lg font-light tracking-wide focus:outline-none md:border-none md:pr-8'
+          className='md:focus:outline-auto h-[40px] w-full appearance-none rounded-none border border-solid border-black bg-white p-1 pr-0 font-light tracking-wide focus:outline-none md:border-none md:pr-8 md:text-lg'
           onChange={handleSort}
         >
           {ProductSortOptions.map((option, index) => (
