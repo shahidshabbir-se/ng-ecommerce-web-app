@@ -13,7 +13,6 @@ import {
 import { getCartItems } from './get/getCart.routes'
 import { updateOrAddCartItem } from './add/addCart.routes'
 import { getProductsByTerm } from '@routes/get/getProductsByTerm.routes'
-import {delFromCart} from '@routes/del/delFromCart.routes'
 
 const router = Router()
 
@@ -52,7 +51,7 @@ router.get(`${cart_route}/getCartItems`, getCartItems)
 // add item to cart
 router.post(`${cart_route}/updateOrAddCartItem`, updateOrAddCartItem)
 // remove item from cart
-router.post(`${cart_route}/delFromCart`, delFromCart)
+// router.delete(`${cart_route}/removeCartItem`, removeCartItem)
 
 /* --------------- brandRoutes --------------- */
 // create brand
