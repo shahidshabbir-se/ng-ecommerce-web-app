@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['im.uniqlo.com', 'media.debenhams.com', 'media.boohoo.com']
+    domains: [
+      'im.uniqlo.com',
+      'media.debenhams.com',
+      'media.boohoo.com',
+      'www.nastygal.com',
+      'media.nastygal.com'
+    ]
   }
 }
 

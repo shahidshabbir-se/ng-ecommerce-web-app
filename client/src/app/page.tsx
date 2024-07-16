@@ -1,15 +1,14 @@
-import HomeHC from '@components/carousel/horizontal/homeHC'
-import Bar from '@components/specific/search/bar'
-import { LowerBar } from '@components/nav/lowerBar'
+import React from 'react'
+import HeroCarousel from '@components/carousel/heroCarousel'
+import KidsCarousel from '@components/carousel/kidsCarousel'
 
-export default function App() {
+const Page = () => {
   return (
-    <>
-      <Bar />
-      <div className='fixed -z-10'>
-        <HomeHC />
-      </div>
-      <LowerBar />
-    </>
+    <div>
+      <HeroCarousel />
+      <KidsCarousel />
+    </div>
   )
 }
+
+export default Page

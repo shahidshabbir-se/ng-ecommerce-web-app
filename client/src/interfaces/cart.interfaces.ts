@@ -5,3 +5,17 @@ export interface AddToCart {
   variantId: number | null
   size: string | null
 }
+
+export interface CartItem {
+  productId: number
+  quantity: number
+  product: {
+    id: number
+    name: string
+    color: string
+    salePrice: number
+    regPrice: number
+    description: string
+    imageUrl: string
+  }
+}

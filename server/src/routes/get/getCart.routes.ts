@@ -20,7 +20,11 @@ export async function getCartItems(req: Request, res: Response) {
       include: {
         cartItems: {
           include: {
-            Product: true
+            Product: {
+              include: {
+                productVariants: true
+              }
+            }
           }
         }
       }
@@ -31,31 +35,26 @@ export async function getCartItems(req: Request, res: Response) {
     }
 
     // Identify cart items with quantity 0
-    const itemsToDelete = cart.cartItems.filter(
-      (cartItem) => cartItem.quantity === 0
-    )
-
-    // Delete cart items with quantity 0
-    if (itemsToDelete.length > 0) {
-      await prisma.cartProduct.deleteMany({
-        where: {
-          OR: itemsToDelete.map((item) => ({
-            cartProductId: item.cartProductId
-          }))
+    const products = cart.cartItems
+      .filter((cartItem) => cartItem.quantity > 0)
+      .map((cartItem) => {
+        return {
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+          product: {
+            id: cartItem.Product.productId,
+            name: cartItem.Product.productName,
+            color: cartItem.Product.productVariants.find(
+              (variant) => variant.variantId === cartItem.variantId
+            )?.color,
+            salePrice: cartItem.Product.salePrice,
+            regPrice: cartItem.Product.regPrice,
+            imageUrl: cartItem.Product.productVariants.find(
+              (variant) => variant.variantId === cartItem.variantId
+            )?.images[0]
+          }
         }
       })
-    }
-
-    // Extract and format products from cartItems
-    const products = cart.cartItems
-      .filter((cartItem) => cartItem.quantity > 0) // Filter out items with quantity 0
-      .map((cartItem) => ({
-        cartId: cart.cartId,
-        userId: cart.userId,
-        cartItemId: cartItem.cartProductId,
-        productId: cartItem.productId,
-        quantity: cartItem.quantity
-      }))
 
     return res.json(products)
   } catch (error) {
