@@ -2,10 +2,12 @@ import { Router } from 'express'
 import { getProduct } from './get/getProduct.routes'
 import { createCategory } from './create/createCategory.routes'
 import { getCategory } from './get/getCategory.routes'
+import { getCategoryByName } from './get/getCategoryByName.routes'
 import { getProductByTerm } from './get/getProductByTerm.routes'
 import { createProduct } from './create/createProduct.routes'
 import { createUser } from './create/createUser.routes'
 import { createBrand } from './create/createBrand.routes'
+import { getBrandByName } from './get/getBrandByName.routes'
 import {
   verifyUserByCredentials,
   verifyUserFromToken
@@ -36,6 +38,8 @@ router.get(`${category_route}/getCategory/:id`, getCategory)
 router.post(`${category_route}/createCategory`, createCategory)
 // get category by search term
 router.get(`${category_route}/getProductsByTerm`, getProductsByTerm)
+// get category by name
+router.get(`${category_route}/getCategoryByName`, getCategoryByName)
 
 /* --------------- userRoutes --------------- */
 // create user
@@ -56,5 +60,7 @@ router.post(`${cart_route}/updateOrAddCartItem`, updateOrAddCartItem)
 /* --------------- brandRoutes --------------- */
 // create brand
 router.post('/brand/createBrand', createBrand)
+// get brand by name
+router.get('/brand/getBrandByName', getBrandByName)
 
 export default router

@@ -68,7 +68,7 @@ export async function createProduct(req: Request, res: Response) {
         productName,
         productDescription,
         productCare,
-        regPrice,
+        regPrice, 
         salePrice,
         averageRating: 0, // Initial value, can be adjusted
         soldCount: 0, // Initial value, can be adjusted
@@ -82,7 +82,8 @@ export async function createProduct(req: Request, res: Response) {
             variantName: variant.variantName,
             stock: variant.stock,
             color: variant.color,
-            size: variant.size
+            size: variant.size,
+            images: variant.images
           }))
         }
       }
