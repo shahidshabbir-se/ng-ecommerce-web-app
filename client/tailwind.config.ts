@@ -34,11 +34,12 @@ const config: Config = {
         'gray-800': '#1d1e20',
         'gray-900': '#111213',
         'bar-100': '#f5f5f5',
-        black: '#000000',
         'red-400': '#EF4444',
         'red-500': '#e00034',
         'pink-500': '#FC2073',
-        'slate-500': '#737373'
+        'slate-500': '#737373',
+        blurbg: 'rgba(255,255,255,.75)',
+        black: '#000000'
       },
       boxShadow: {
         shadow:

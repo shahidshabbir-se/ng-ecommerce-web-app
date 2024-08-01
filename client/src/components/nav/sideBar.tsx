@@ -13,10 +13,9 @@ import {
   AccordionSummary,
   AccordionDetails,
   IconButton,
-  useMediaQuery,
-  useTheme,
   Typography
 } from '@mui/material'
+import icons from '@icons'
 
 const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
@@ -27,15 +26,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   return (
     <aside>
-      {/* Mobile Sidebar */}
-      <IconButton
-        edge='start'
-        color='inherit'
-        aria-label='menu'
+      <button
         onClick={onToggle}
       >
-        Menu
-      </IconButton>
+        <icons.menu className='text-black size-[22px] mt-1.5' />
+      </button>
       <div
         className={`fixed left-0 top-0 h-full w-64 transform bg-white shadow-lg transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'

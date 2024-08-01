@@ -1,7 +1,7 @@
 'use client'
 import { useOutsideClick } from '@hooks/clickOutside.hooks'
 import { useAuthAsideVisibilityStore } from '@store/index'
-import { Fragment, useState,useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Sidebar from './sidebar'
 import { authState } from '@interfaces/auth.interfaces'
 import icons from '@icons'
@@ -10,7 +10,6 @@ const Index = () => {
   const [authState, setAuthState] = useState<authState>({
     currentState: 'auth'
   })
-
 
   const handleAuthStateChange = (newState: 'auth' | 'register' | 'login') => {
     setTimeout(() => {
@@ -34,38 +33,19 @@ const Index = () => {
   return (
     <Fragment>
       {authAsideVisibility && (
-        <div className='translate-transform absolute top-0 z-[1999] h-screen w-screen bg-gray-500/65 duration-500' />
+        <div className='translate-transform fixed inset-0 z-[1999] h-full w-screen md:bg-blurbg duration-500 md:block hidden' />
       )}
       <div
         className={`${
           authAsideVisibility ? 'translate-x-0' : 'translate-x-full'
-        } fixed left-0 top-0 z-[2000] h-screen w-screen
-            transform transition-transform duration-500`}
+        } fixed left-0 z-[2000] h-[calc(100vh-46px)] w-screen transform
+            transition-transform duration-500 -mt-0.5 md:mt-0 md:top-0`}
       >
         <div ref={ref}>
-          <button
-            onClick={
-              authState.currentState !== 'auth'
-                ? () => handleAuthStateChange('auth')
-                : () => handleAuthAsideVisibility(false)
-            }
-          >
-            <icons.cross
-              className={`${
-                authState.currentState === 'auth'
-                  ? 'bottom-6'
-                  : authState.currentState === 'register'
-                    ? 'bottom-[550px]'
-                    : 'bottom-[350px]'
-              } md:translate-r-[23.5rem] absolute left-1/2 z-[90] size-10 -translate-x-1/2 bg-white md:left-[calc(100%-25.5rem)] md:top-2 md:size-8`}
-            />
-            {/* TODO: 
-            1.icon position on register and login component rendering
-          */}
-          </button>
           <Sidebar
             authState={authState}
             handleAuthState={handleAuthStateChange}
+            handleAuthAsideVisibility={handleAuthAsideVisibility}
           />
         </div>
       </div>

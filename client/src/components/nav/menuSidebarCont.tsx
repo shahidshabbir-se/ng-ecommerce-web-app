@@ -24,7 +24,7 @@ const MenuSidebarContainer: React.FC = () => {
   }
 
   return (
-    <div className='flex w-full justify-start'>
+    <div className='flex size-[34px] lg:w-full justify-center items-center lg:justify-start'>
       {isMobile ? (
         <Sidebar
           isOpen={isSidebarOpen}
