@@ -4,8 +4,11 @@ import React, { useState, useEffect } from 'react'
 import icons from '@data/generator/icon.generator'
 import Link from 'next/link'
 import { useSearchVisibilityStore } from '@store/index'
+import { useRouter } from 'next/navigation'
 
 export default function Bar() {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const handleSearchBarVisibility = useSearchVisibilityStore(
     (state) => state.setSearchBarVisibility
   )
@@ -22,8 +25,9 @@ export default function Bar() {
       console.log('Search query is empty')
       return
     }
-
-    console.log('Searching for:', trimmedQuery)
+    setLoading(true)
+    router.push(`/results?search_query=${encodeURIComponent(trimmedQuery)}`)
+    setLoading(false)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +92,11 @@ export default function Bar() {
         </div>
       </div>
       {searchBarVisibility && (
-        <div className='fixed left-0 top-0 z-[50] h-screen w-screen bg-gray-500 opacity-65 duration-300'></div>
+        <div
+          className={`fixed left-0 top-0 flex h-screen w-screen items-center justify-center ${loading ? 'z-[2000] bg-gray-500' : 'z-[50] bg-gray-500  opacity-65 duration-300'}`}
+        >
+          {loading && <p>Loading ...</p>}
+        </div>
       )}
     </>
   )

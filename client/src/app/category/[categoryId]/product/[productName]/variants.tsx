@@ -3,18 +3,24 @@
 import React, { useEffect, useState } from 'react'
 import { useProductsStore, setSelectedColor } from '@store/index'
 import { productVariant } from '@interfaces/getProductData.interfaces'
+import { AddToCart } from '@interfaces/cart.interfaces'
 
 // Define Props interfaces
 interface variantsProps {
   productVariants: productVariant[]
+  setIsDisabled: (value: boolean) => void
+  setCart: (value: any) => void
+  cart: AddToCart
 }
 
-// Variants component
-const Variants: React.FC<variantsProps> = ({ productVariants }) => {
+const Variants: React.FC<variantsProps> = ({
+  productVariants,
+  setIsDisabled,
+  setCart,
+  cart
+}) => {
   const selectedColor = useProductsStore((state) => state.selectedColor)
-
   const setSelectedColor = useProductsStore((state) => state.setSelectedColor)
-
   const [selectedSize, setSelectedSize] = useState<string>('')
 
   // Set the default selected color to the first variant's color
@@ -27,10 +33,30 @@ const Variants: React.FC<variantsProps> = ({ productVariants }) => {
   const handleColorSelect = (color: string) => {
     setSelectedColor(color)
     setSelectedSize('')
+    setIsDisabled(true)
   }
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size)
+    setIsDisabled(false)
+
+    // Find the first variant that matches the selected size among filtered variants
+    const selectedVariant = productVariants.find(
+      (variant) =>
+        variant.color === selectedColor &&
+        (Array.isArray(variant.size)
+          ? variant.size.includes(size)
+          : variant.size === size)
+    )
+
+    if (selectedVariant) {
+      console.log('selectedVariant', selectedVariant)
+      setCart((prevCart: AddToCart) => ({
+        ...prevCart,
+        size: size,
+        variantId: selectedVariant.variantId
+      }))
+    }
   }
 
   return (
