@@ -24,7 +24,7 @@ export default function RootLayout({
         <NavBar />
         <SearchBar />
         <Index />
-        <div className='relative mt-[60px]'>{children}</div>
+        <div className='relative mt-[48px] md:mt-[60px]'>{children}</div>
       </body>
     </html>
   )

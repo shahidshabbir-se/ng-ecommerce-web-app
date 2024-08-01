@@ -9,6 +9,7 @@ import { IoFilterSharp } from 'react-icons/io5'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { AiOutlineMinus } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
+import { RxHamburgerMenu } from 'react-icons/rx'
 
 const icons = {
   cart: PiShoppingBagThin,
@@ -21,7 +22,8 @@ const icons = {
   filter: IoFilterSharp,
   plus: AiOutlinePlus,
   minus: AiOutlineMinus,
-  google: FcGoogle
+  google: FcGoogle,
+  menu: RxHamburgerMenu
 }
 
 export default icons

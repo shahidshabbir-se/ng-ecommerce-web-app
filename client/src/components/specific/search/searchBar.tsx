@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from 'react'
 import icons from '@icons'
 import Link from 'next/link'
-import { useSearchVisibilityStore } from '@store/index'
+import { setAuthAsideVisibility, setSearchBarVisibility, useSearchVisibilityStore } from '@store/index'
 import { useRouter } from 'next/navigation'
+import { popularTags } from '@data/popularTags'
 
 export default function SearchBar() {
   const router = useRouter()
@@ -17,7 +18,7 @@ export default function SearchBar() {
   )
   const [searchQuery, setSearchQuery] = useState('')
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const trimmedQuery = searchQuery.trim()
@@ -25,9 +26,18 @@ export default function SearchBar() {
       console.log('Search query is empty')
       return
     }
+
     setLoading(true)
-    router.push(`/results?search_query=${encodeURIComponent(trimmedQuery)}`)
-    setLoading(false)
+    try {
+      router.push(
+        `/results?search_query=${encodeURIComponent(trimmedQuery)}`
+      )
+      setSearchBarVisibility(false)
+    } catch (err) {
+      console.error('Navigation error:', err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,25 +66,25 @@ export default function SearchBar() {
   return (
     <>
       <div
-        className={`search-bar fixed right-0 top-0 z-[2000] h-screen w-96 transition duration-300 ${
+        className={`search-bar fixed right-0 md:top-0 z-[2000] h-screen w-screen md:w-96 transition duration-300 ${
           searchBarVisibility ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className='relative z-[100] flex gap-3 bg-bar-100 p-[9px]'>
+        <div className='relative z-[100] flex gap-3 bg-white md:bg-bar-100 p-[9px]'>
           <form
             className='flex h-[42px] w-full items-center border-b'
             onSubmit={handleSearch}
           >
             <Link
-              className='flex size-9 items-center'
+              className='mr-2 flex h-9 w-10 items-center justify-center hover:bg-gray-500/10'
               href={`/results?search_query=${encodeURIComponent(searchQuery)}`}
             >
               <icons.search className='size-6' />
             </Link>
             <input
-              className='h-full w-full bg-transparent text-lg placeholder-black outline-none'
+              className='h-full w-full bg-transparent text-lg placeholder-black outline-none transition-opacity duration-500'
               type='text'
-              placeholder='search'
+              placeholder='Search for products'
               value={searchQuery}
               onChange={handleInputChange}
             />
@@ -88,12 +98,24 @@ export default function SearchBar() {
           </form>
         </div>
         <div className='relative z-[100] h-full bg-white px-[18px] py-5'>
-          <h1 className='text-lg'>Popular</h1>
+          <h1 className='pb-4 text-lg'>Popular</h1>
+          <div className='grid'>
+            {popularTags.map((tag) => (
+              <Link
+                key={tag.name}
+                className='mb-4 flex items-center justify-between bg-bar-100 pb-[13px] pl-4 pr-[11px] pt-3'
+                href={tag.link}
+              >
+                <span>{tag.name}</span>
+                <icons.chevron className='size-3 -rotate-90' />
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
       {searchBarVisibility && (
         <div
-          className={`fixed left-0 top-0 flex h-screen w-screen items-center bg-gray-500/65 z-[1999] duration-500`}
+          className={`bg-blurbg fixed left-0 md:top-0 z-[1999] flex h-screen w-screen items-center duration-500`}
         >
           {loading && <p>Loading ...</p>}
         </div>
