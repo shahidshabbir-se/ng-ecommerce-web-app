@@ -12,12 +12,12 @@ model User {
   firstName    String
   lastName     String
   email        String    @unique
-  password     String
+  password     String?
   addresses    Address[]
   orders       Order[]
   salt         String
   profileImage String?
-  refreshToken String?
+  googleId     String?
   cart         Cart?
   wishlist     Wishlist?
   createdAt    DateTime  @default(now())
