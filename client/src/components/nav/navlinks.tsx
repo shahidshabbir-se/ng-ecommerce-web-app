@@ -1,7 +1,6 @@
 import React from 'react'
 import { AccountButton, SearchButton } from './navButtons'
 import Link from 'next/link'
-import icons from '@icons'
 import Image from 'next/image'
 
 interface LinksProps {
@@ -30,7 +29,7 @@ const Links: React.FC<LinksProps> = ({ links }) => {
         >
           {link.href ? (
             <div
-              className={`${link.href === '/cart' ? 'hidden' : 'absolute left-[34px] md:static'}`}
+              className={`${link.href === '/cart' ? 'hidden lg:block' : 'absolute left-[34px] lg:static'}`}
             >
               <Link
                 className={`${buttonStyle} lg:group-hover:text-gray-600`}
@@ -48,12 +47,12 @@ const Links: React.FC<LinksProps> = ({ links }) => {
               {link.label === 'search' ? (
                 <SearchButton
                   iconStyle={iconsStyle}
-                  buttonStyle={`${buttonStyle} absolute md:static right-[34px] top-1/2 md:translate-y-0 -translate-y-1/2`}
+                  buttonStyle={`${buttonStyle} absolute lg:static right-[34px] top-1/2 lg:translate-y-0 -translate-y-1/2`}
                 />
               ) : link.label === 'account' ? (
                 <AccountButton
                   iconStyle={iconsStyle}
-                  buttonStyle={`${buttonStyle} absolute md:static right-0 top-1/2 md:translate-y-0 -translate-y-1/2`}
+                  buttonStyle={`${buttonStyle} absolute lg:static right-0 top-1/2 lg:translate-y-0 -translate-y-1/2`}
                 />
               ) : (
                 ''
@@ -66,7 +65,7 @@ const Links: React.FC<LinksProps> = ({ links }) => {
               height='100'
               layout='fixed'
               src='/svg/border.svg'
-              className='invisible absolute bottom-0 h-min w-min group-hover:visible'
+              className='invisible absolute bottom-0 h-min w-min group-hover:lg:visible'
               alt=''
             />
           )}

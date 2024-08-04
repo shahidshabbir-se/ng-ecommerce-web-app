@@ -39,14 +39,17 @@ const Slide: React.FC<SlideProps> = ({ currentState, CrossButton }) => {
           className={`absolute left-1/2 z-10 w-[calc(100vw-20px)] -translate-x-1/2 transform bg-white/70 pt-4 shadow-xl transition-transform duration-500 md:w-[340px] ${state === 'entering' || state === 'entered' ? 'bottom-1/2 translate-y-1/2' : 'bottom-0 translate-y-full'}`}
         >
           <div className='relative flex gap-4 px-4'>
-            <button className='flex w-full items-center justify-center gap-2 bg-black py-2 font-bold text-xl text-white md:w-[calc(100%-2rem)]'>
+            <a
+              href={process.env.NEXT_PUBLIC_GOOGLE_AUTH_URL}
+              className='flex w-full items-center justify-center gap-2 bg-black py-2 font-bold text-xl text-white md:w-[calc(100%-2rem)]'
+            >
               <icons.google className='size-6' />
               <span>
                 Sign
                 {currentState === 'register' ? ' up ' : ' in '}
                 with Google
               </span>
-            </button>
+            </a>
             <CrossButton />
           </div>
           {shouldRenderComponent === 'register' && <Register />}
