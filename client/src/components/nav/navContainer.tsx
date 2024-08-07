@@ -3,6 +3,8 @@ import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import Slide from '@mui/material/Slide'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 
 interface HideOnScrollProps {
   children: React.ReactElement
@@ -26,13 +28,22 @@ interface NavBarProps {
 }
 
 const NavContainer: React.FC<NavBarProps> = ({ children }) => {
+  const theme = useTheme()
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('md'))
+
   return (
     <React.Fragment>
-      <HideOnScroll>
+      {isLargeScreen ? (
+        <HideOnScroll>
+          <AppBar color='inherit' elevation={0}>
+            {children}
+          </AppBar>
+        </HideOnScroll>
+      ) : (
         <AppBar color='inherit' elevation={0}>
           {children}
         </AppBar>
-      </HideOnScroll>
+      )}
     </React.Fragment>
   )
 }

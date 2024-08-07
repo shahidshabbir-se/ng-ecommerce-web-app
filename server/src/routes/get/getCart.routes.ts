@@ -21,8 +21,21 @@ export async function getCartItems(req: Request, res: Response) {
         cartItems: {
           include: {
             Product: {
-              include: {
-                productVariants: true
+              select: {
+                productId: true,
+                productName: true,
+                salePrice: true,
+                regPrice: true,
+                productVariants: {
+                  select: {
+                    variantId: true,
+                    color: true,
+                    images: true,
+                    size: true,
+                    variantName: true,
+                    stock: true
+                  }
+                }
               }
             }
           }
@@ -51,7 +64,14 @@ export async function getCartItems(req: Request, res: Response) {
             regPrice: cartItem.Product.regPrice,
             imageUrl: cartItem.Product.productVariants.find(
               (variant) => variant.variantId === cartItem.variantId
-            )?.images[0]
+            )?.images[0],
+            size: cartItem.Product.productVariants.find(
+              (variant) => variant.variantId === cartItem.variantId
+            )?.size,
+            variantName: cartItem.Product.productVariants.find(
+              (variant) => variant.variantId === cartItem.variantId
+            )?.variantName,
+            variantId: cartItem.variantId
           }
         }
       })

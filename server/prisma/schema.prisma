@@ -12,12 +12,12 @@ model User {
   firstName    String
   lastName     String
   email        String    @unique
-  password     String
+  password     String?
   addresses    Address[]
   orders       Order[]
   salt         String
   profileImage String?
-  refreshToken String?
+  googleId     String?
   cart         Cart?
   wishlist     Wishlist?
   createdAt    DateTime  @default(now())
@@ -37,13 +37,15 @@ model CartProduct {
   cartProductId    Int      @id @default(autoincrement())
   cartId           Int
   cart             Cart     @relation(fields: [cartId], references: [cartId])
-  variantId        Int // Directly referencing the product variant
+  variantId        Int
+  size             String
   quantity         Int
   Product          Product @relation(fields: [productId], references: [productId])
   productId        Int
 
-  @@unique([cartId, variantId])
+  @@unique([cartId, productId, variantId, size])
 }
+
 
 model Product {
   productId          Int              @id @default(autoincrement())
@@ -60,6 +62,7 @@ model Product {
   regPrice           Float
   salePrice          Float?
   orders             Order[]
+  
   productCategory    Category         @relation(fields: [categoryId], references: [categoryId])
   cartProducts       CartProduct[] // Relationship to cart products
   createdAt          DateTime         @default(now())
@@ -105,8 +108,6 @@ model Category {
   products            Product[]
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
-
-  @@unique([categoryName])
 }
 
 model Brand {
@@ -117,8 +118,6 @@ model Brand {
   products         Product[] @relation("brandIdToProduct")
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
-
-  @@unique([brandName])
 }
 
 model Address {
@@ -135,10 +134,21 @@ model Address {
   updatedAt    DateTime @default(now())
 }
 
+model OrderProduct {
+  orderProductId Int      @id @default(autoincrement())
+  productId      Int
+  variantId      Int
+  size           String
+  quantity       Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  Order          Order[]
+}
+
 model Order {
   orderId     Int       @id @default(autoincrement())
   userId      Int
-  products    Product[]
+  products    OrderProduct[]
   orderTotal  Float
   user        User      @relation(fields: [userId], references: [userId])
   orderStatus String
@@ -146,6 +156,7 @@ model Order {
   addressId   Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  Product     Product[]
 }
 
 model Wishlist {

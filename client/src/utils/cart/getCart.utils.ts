@@ -1,10 +1,12 @@
-import axios from "axios";
+import axios from 'axios'
 
-export async function getUser() {
+export async function getCart(userId: number) {
   try {
-    const response = await axios.get("/api/auth/user");
-    return response.data;
+    const response = await axios.get(`
+      http://localhost:8080/api/cart/getCartItems?userId=${userId}
+      `)
+    return response.data
   } catch (error) {
-    return null;
+    return null
   }
 }

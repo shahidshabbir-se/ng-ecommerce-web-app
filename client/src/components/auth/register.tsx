@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { registerUser } from '@utils/auth/register'
 import { CreateUser } from '@interfaces/auth.interfaces'
+import { useGlobalUserStore } from '@store/globalUser/store'
+import { GlobalUserState } from '@store/globalUser/types'
+import { useAuthAsideVisibilityStore } from '@store/index'
 
 const Register: React.FC = () => {
   const [createUser, setCreateUser] = useState<CreateUser>({
@@ -18,7 +21,9 @@ const Register: React.FC = () => {
       [name]: value
     })
   }
-
+  const handleAuthAsideVisibility = useAuthAsideVisibilityStore(
+    (state) => state.setAuthAsideVisibility
+  )
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     if (createUser.firstName === '') {
@@ -37,9 +42,47 @@ const Register: React.FC = () => {
       setMessage('Password is required')
       return
     }
-    const response = await registerUser(createUser)
-    setMessage(response)
-    console.log(response)
+    try {
+      const response = await registerUser(createUser)
+      if (response.message === 'User already exists') {
+        setMessage(response.message)
+        return
+      }
+      const userData: GlobalUserState = {
+        email: response.user.email,
+        firstName: response.user.firstName,
+        lastName: response.user.lastName,
+        userId: response.user.userId,
+        cart: response.user.cart,
+        addresses: response.user.addresses,
+        profileImage: response.user.profileImage,
+        wishlist: response.user.wishlist,
+        orders: response.user.orders,
+        password: response.user.password ? response.user.password : null,
+        googleId: response.user.googleId ? response.user.googleId : null
+      }
+
+      useGlobalUserStore.getState().setUser(userData)
+      if (response.error) {
+        setMessage(response.error)
+        setTimeout(() => {
+          setMessage('')
+        }, 3000)
+      } else {
+        setMessage(response.message)
+        setTimeout(() => {
+          setMessage('')
+        }, 2000)
+        setTimeout(() => {
+          handleAuthAsideVisibility(false)
+        }, 1000)
+      }
+    } catch (error) {
+      setMessage('Internal server error occurred')
+      setTimeout(() => {
+        setMessage('')
+      }, 3000)
+    }
   }
 
   return (
@@ -90,6 +133,15 @@ const Register: React.FC = () => {
       >
         Register
       </button>
+      <p
+        className={`'w-full text-center ${
+          message === 'User created successfully'
+            ? 'text-green-500'
+            : 'text-red-500'
+        }`}
+      >
+        {message}
+      </p>
     </form>
   )
 }

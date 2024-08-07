@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { LoginUser } from '@interfaces/auth.interfaces'
 import { loginUser } from '@utils/auth/login.utils'
+import { useGlobalUserStore } from '@store/globalUser/store'
+import { useAuthAsideVisibilityStore } from '@store/index'
 
 const Login: React.FC = () => {
   const [loginUserCredentials, setLoginUserCredentials] = useState<LoginUser>({
@@ -8,6 +10,9 @@ const Login: React.FC = () => {
     password: ''
   })
   const [message, setMessage] = useState<string>('')
+  const handleAuthAsideVisibility = useAuthAsideVisibilityStore(
+    (state) => state.setAuthAsideVisibility
+  )
 
   const handleEntry = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -19,8 +24,32 @@ const Login: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    console.log('Before login',useGlobalUserStore.getState().userId)
+
     try {
       const response = await loginUser(loginUserCredentials)
+      if (
+        response.message ===
+        'This email is not registered. Please sign up to create an account.'
+      ) {
+        setMessage(response.message)
+        return
+      }
+      if (
+        response.message ===
+        "Incorrect password. Please ensure you've entered the correct password."
+      ) {
+        setMessage(response.message)
+        return
+      }
+      useGlobalUserStore.getState().setUser(response.user)
+      console.log('After login',useGlobalUserStore.getState().userId)
+      setTimeout(() => {
+        setMessage('Login successful')
+      }, 2000)
+      setTimeout(() => {
+        handleAuthAsideVisibility(false)
+      }, 1000)
     } catch (error) {
       setMessage('Login failed. Please check your credentials.')
       console.error('Login error:', error)
@@ -55,6 +84,13 @@ const Login: React.FC = () => {
       >
         Login
       </button>
+      <p
+        className={`'w-full text-center ${
+          message === 'Login successful' ? 'text-green-500' : 'text-red-500'
+        }`}
+      >
+        {message}
+      </p>
     </form>
   )
 }

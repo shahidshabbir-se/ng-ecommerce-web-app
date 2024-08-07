@@ -4,8 +4,8 @@ import setupModuleAliases from './moduleAlias'
 import cookieParser from 'cookie-parser'
 setupModuleAliases()
 import { connectDB } from '@configs/prisma.config'
-import passport from 'passport'
 import cors from 'cors'
+import passport from '@configs/passport.config'
 dotenv.config()
 
 const corsOptions = {

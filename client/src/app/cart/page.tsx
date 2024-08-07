@@ -4,6 +4,7 @@ import React from 'react'
 import { useEffect, useState, Fragment } from 'react'
 import { productData } from '@interfaces/product.interfaces'
 import { CartItem } from '@interfaces/cart.interfaces'
+import Link from 'next/link'
 
 const Page = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>()
@@ -48,6 +49,7 @@ const Page = () => {
               alt={cartItem.product.name}
             />
             {totalPrice > 0 && <h3>Total: ${totalPrice}</h3>}
+            <Link href='/checkout'>Checkout</Link>
           </Fragment>
         )
       })}

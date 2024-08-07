@@ -62,7 +62,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
     <div className='grid w-full grid-cols-2 gap-x-5 gap-y-10 md:gap-x-2 lg:grid-cols-4'>
       {resultData.map((product) => (
         <Link
-          href={`/category/${product.categoryId}/product/${product.productId}`}
+          href={'#'}
           className='grid max-w-[400px] pb-2 md:pr-2'
           key={product.productId}
         >

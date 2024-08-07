@@ -15,7 +15,9 @@ export interface CartItem {
     color: string
     salePrice: number
     regPrice: number
-    description: string
     imageUrl: string
+    size: string
+    quantity: number
+    variantId: number
   }
 }
