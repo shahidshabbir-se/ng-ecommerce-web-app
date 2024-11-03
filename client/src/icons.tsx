@@ -10,10 +10,10 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { AiOutlineMinus } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
 import { RxHamburgerMenu } from 'react-icons/rx'
-import { MdLock } from "react-icons/md";
-import { CiCreditCard2 } from "react-icons/ci";
-import { CiCalendar } from "react-icons/ci";
-import { LiaCcVisa } from "react-icons/lia";
+import { MdLock } from 'react-icons/md'
+import { CiCreditCard2 } from 'react-icons/ci'
+import { CiCalendar } from 'react-icons/ci'
+import { LiaCcVisa } from 'react-icons/lia'
 
 const icons = {
   cart: PiShoppingBagThin,

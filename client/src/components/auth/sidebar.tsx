@@ -72,9 +72,7 @@ const CrossButton: React.FC<CrossButtonProps> = ({
           ? () => handleAuthStateChange('auth')
           : () => handleAuthAsideVisibility(false)
       }
-      className={`right-5 top-10 z-[90] flex items-center justify-center bg-white md:right-8 md:top-3
-        ${authState.currentState === 'auth' ? 'absolute size-10' : 'min-h-10 min-w-10     border-2 border-black'}
-        `}
+      className={`right-5 top-10 z-[90] flex items-center justify-center bg-white md:right-8 md:top-3 ${authState.currentState === 'auth' ? 'absolute size-10' : 'min-h-10 min-w-10 border-2 border-black'} `}
     >
       <icons.cross className='size-8' />
     </button>

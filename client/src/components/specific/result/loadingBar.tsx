@@ -1,4 +1,4 @@
-import { BarProps } from "@interfaces/loadingBar.interfaces"
+import { BarProps } from '@interfaces/loadingBar.interfaces'
 
 const loadingBar: React.FC<BarProps> = ({ width, height, py }) => (
   <div

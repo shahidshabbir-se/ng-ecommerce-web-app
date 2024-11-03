@@ -8,7 +8,11 @@ interface AddressProps {
   onSelectAddress: (addressId: number) => void
 }
 
-const Address: React.FC<AddressProps> = ({ userId, selectedAddressId, onSelectAddress }) => {
+const Address: React.FC<AddressProps> = ({
+  userId,
+  selectedAddressId,
+  onSelectAddress
+}) => {
   const [addresses, setAddresses] = React.useState<AddressType[]>([])
   const [loading, setLoading] = React.useState<boolean>(true)
 
@@ -33,7 +37,9 @@ const Address: React.FC<AddressProps> = ({ userId, selectedAddressId, onSelectAd
       <div className='mb-4 flex items-center justify-between'>
         <strong className='font-extraBold text-xl'>Delivery Addresses</strong>
         <button
-          onClick={() => {/* Show form/modal to add new address */}}
+          onClick={() => {
+            /* Show form/modal to add new address */
+          }}
           className='font-bold underline'
         >
           Add New Address

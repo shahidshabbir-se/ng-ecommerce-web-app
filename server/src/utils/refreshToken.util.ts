@@ -66,6 +66,6 @@ export async function refreshTokens(accessToken: string, refreshToken: string) {
       refreshToken: encryptedRefreshToken
     }
   } catch (error) {
-    return 
+    return
   }
 }

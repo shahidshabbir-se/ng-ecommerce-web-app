@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,37 +18,18 @@
       }
     ],
     "paths": {
-      "@app/*": [
-        "./src/app/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@interfaces/*": [
-        "./src/interfaces/*"
-      ],
-      "@data/*": [
-        "./src/data/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@services/*": [
-        "./src/services/*"
-      ],
-      "@store/*": [
-        "./src/store/*"
-      ],
-      "@middlewares/*": [
-        "./src/middlewares/*"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-      "@icons": [
-        "./src/icons.tsx"
-      ],
-    }
+      "@app/*": ["./src/app/*"],
+      "@components/*": ["./src/components/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@data/*": ["./src/data/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@services/*": ["./src/services/*"],
+      "@store/*": ["./src/store/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@icons": ["./src/icons.tsx"]
+    },
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",
@@ -63,7 +40,5 @@
     "src/app/results/page.jsx",
     "src/components/auth/index.txy"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

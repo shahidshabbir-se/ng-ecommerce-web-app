@@ -114,7 +114,7 @@ const Checkout: React.FC<CheckoutProps> = ({ Promo }) => {
         setOrderSuccess(true)
         setTimeout(() => {
           setOrderSuccess(false)
-        }, 2000);
+        }, 2000)
         return 'Order placed successfully'
       }
     } catch (error) {

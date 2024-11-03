@@ -3,7 +3,7 @@ import React from 'react'
 
 const Promo = () => {
   return (
-    <div className='bg-white px-5 py-6 font-extraBold mb-4'>
+    <div className='mb-4 bg-white px-5 py-6 font-extraBold'>
       <h1 className='mb-4 text-xl'>Promo Code</h1>
       <form className='mb-3 flex justify-between border' action=''>
         <input

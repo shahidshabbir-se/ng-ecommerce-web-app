@@ -26,10 +26,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   return (
     <aside>
-      <button
-        onClick={onToggle}
-      >
-        <icons.menu className='text-black size-[22px] mt-1.5' />
+      <button onClick={onToggle}>
+        <icons.menu className='mt-1.5 size-[22px] text-black' />
       </button>
       <div
         className={`fixed left-0 top-0 h-full w-64 transform bg-white shadow-lg transition-transform duration-300 ease-in-out ${

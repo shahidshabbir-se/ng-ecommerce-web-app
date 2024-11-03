@@ -1,4 +1,4 @@
-import {create} from 'zustand'
+import { create } from 'zustand'
 import { ResultState } from './types'
 
 export const useResultStore = create<ResultState>((set) => ({

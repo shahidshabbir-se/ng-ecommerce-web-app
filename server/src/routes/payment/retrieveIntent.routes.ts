@@ -19,7 +19,7 @@ export const retrieveIntent = async (req: Request, res: Response) => {
 
     // Extract PaymentIntent ID from clientSecret
     const paymentIntentId = clientSecret.split('_secret_')[0]
-    
+
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId)
     res.send(paymentIntent)
   } catch (error) {

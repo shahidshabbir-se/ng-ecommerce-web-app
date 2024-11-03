@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 export const verifyByToken = async (token: string) => {
   try {
@@ -6,12 +6,12 @@ export const verifyByToken = async (token: string) => {
       `${process.env.NEXT_PUBLIC_SERVER_URL}api/user/verifyUserByToken`,
       {
         headers: {
-          access_token: token,
-        },
+          access_token: token
+        }
       }
-    );
-    return response.data;
+    )
+    return response.data
   } catch (error) {
-    return error.response.data;
+    return error.response.data
   }
-};
+}

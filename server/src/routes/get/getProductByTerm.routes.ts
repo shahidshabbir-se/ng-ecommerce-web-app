@@ -54,7 +54,7 @@ export async function getProductByTerm(req: Request, res: Response) {
 
     // Search across the entire product database if categoryId is missing or not valid
     if (!categoryId || productsFromCategory.length === 0) {
-      productsFromDatabase=await prisma.product.findMany({
+      productsFromDatabase = await prisma.product.findMany({
         where: {
           OR: [
             {

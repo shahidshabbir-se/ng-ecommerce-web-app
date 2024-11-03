@@ -24,7 +24,7 @@ const Login: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('Before login',useGlobalUserStore.getState().userId)
+    console.log('Before login', useGlobalUserStore.getState().userId)
 
     try {
       const response = await loginUser(loginUserCredentials)
@@ -43,7 +43,7 @@ const Login: React.FC = () => {
         return
       }
       useGlobalUserStore.getState().setUser(response.user)
-      console.log('After login',useGlobalUserStore.getState().userId)
+      console.log('After login', useGlobalUserStore.getState().userId)
       setTimeout(() => {
         setMessage('Login successful')
       }, 2000)

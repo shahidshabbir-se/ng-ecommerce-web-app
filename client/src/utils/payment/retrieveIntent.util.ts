@@ -19,6 +19,9 @@ export async function retrieveIntent(clientSecret: string) {
       console.error('Unexpected error:', error)
     }
     // Return an object with the error message for handling in the component
-    return { error: error.message || 'An error occurred while retrieving the payment intent' }
+    return {
+      error:
+        error.message || 'An error occurred while retrieving the payment intent'
+    }
   }
 }

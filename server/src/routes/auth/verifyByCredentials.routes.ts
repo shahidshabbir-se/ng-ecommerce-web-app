@@ -39,7 +39,7 @@ export const verifyByCredentials = (
       )
 
       res.cookie('accessToken', accessToken, {
-        httpOnly: false ,
+        httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict'
       })

@@ -33,13 +33,12 @@ const Index = () => {
   return (
     <Fragment>
       {authAsideVisibility && (
-        <div className='translate-transform fixed inset-0 z-[1999] h-full w-screen md:bg-blurbg duration-500 md:block hidden' />
+        <div className='translate-transform fixed inset-0 z-[1999] hidden h-full w-screen duration-500 md:block md:bg-blurbg' />
       )}
       <div
         className={`${
           authAsideVisibility ? 'translate-x-0' : 'translate-x-full'
-        } fixed left-0 z-[2000] h-[calc(100vh-46px)] w-screen transform
-            transition-transform duration-500 -mt-0.5 md:mt-0 md:top-0`}
+        } fixed left-0 z-[2000] -mt-0.5 h-[calc(100vh-46px)] w-screen transform transition-transform duration-500 md:top-0 md:mt-0`}
       >
         <div ref={ref}>
           <Sidebar

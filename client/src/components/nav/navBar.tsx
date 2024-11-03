@@ -8,7 +8,7 @@ const NavBar = () => {
   const iconsStyle = 'size-6'
   return (
     <NavContainer>
-      <div className='flex max-h-[48px] md:min-h-[60px] w-full items-center justify-between px-0 lg:px-5'>
+      <div className='flex max-h-[48px] w-full items-center justify-between px-0 md:min-h-[60px] lg:px-5'>
         <Logo />
         <MenuSidebarContainer />
         <Links

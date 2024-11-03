@@ -3,7 +3,11 @@
 import React, { useState, useEffect } from 'react'
 import icons from '@icons'
 import Link from 'next/link'
-import { setAuthAsideVisibility, setSearchBarVisibility, useSearchVisibilityStore } from '@store/index'
+import {
+  setAuthAsideVisibility,
+  setSearchBarVisibility,
+  useSearchVisibilityStore
+} from '@store/index'
 import { useRouter } from 'next/navigation'
 import { popularTags } from '@data/popularTags'
 
@@ -29,9 +33,7 @@ export default function SearchBar() {
 
     setLoading(true)
     try {
-      router.push(
-        `/results?search_query=${encodeURIComponent(trimmedQuery)}`
-      )
+      router.push(`/results?search_query=${encodeURIComponent(trimmedQuery)}`)
       setSearchBarVisibility(false)
     } catch (err) {
       console.error('Navigation error:', err)
@@ -66,11 +68,11 @@ export default function SearchBar() {
   return (
     <>
       <div
-        className={`search-bar fixed right-0 md:top-0 z-[2000] h-screen w-screen md:w-96 transition duration-300 ${
+        className={`search-bar fixed right-0 z-[2000] h-screen w-screen transition duration-300 md:top-0 md:w-96 ${
           searchBarVisibility ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className='relative z-[100] flex gap-3 bg-white md:bg-bar-100 p-[9px]'>
+        <div className='relative z-[100] flex gap-3 bg-white p-[9px] md:bg-bar-100'>
           <form
             className='flex h-[42px] w-full items-center border-b'
             onSubmit={handleSearch}
@@ -115,7 +117,7 @@ export default function SearchBar() {
       </div>
       {searchBarVisibility && (
         <div
-          className={`bg-blurbg fixed left-0 md:top-0 z-[1999] flex h-screen w-screen items-center duration-500`}
+          className={`fixed left-0 z-[1999] flex h-screen w-screen items-center bg-blurbg duration-500 md:top-0`}
         >
           {loading && <p>Loading ...</p>}
         </div>

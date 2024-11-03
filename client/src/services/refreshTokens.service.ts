@@ -7,6 +7,6 @@ const refreshTokens = async () => {
       { withCredentials: true }
     )
   } catch (error: any) {
-    return `An error occurred while refreshing tokens: ${error.message}`;
+    return `An error occurred while refreshing tokens: ${error.message}`
   }
 }
