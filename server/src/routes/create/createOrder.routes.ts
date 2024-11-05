@@ -1,11 +1,12 @@
 import { Response, Request } from 'express'
 import { prisma } from '@configs/prisma.config'
 
-export async function createOrder(req: Request, res: Response) {
+export async function createOrder(req: Request, res: Response): Promise<void> {
   const { userId, addressId, totalAmount, products } = req.body
 
   if (!userId || !addressId || !totalAmount || !products) {
-    return res.status(400).json({ message: 'Missing required fields' })
+    res.status(400).json({ message: 'Missing required fields' })
+    return
   }
 
   try {
@@ -15,7 +16,8 @@ export async function createOrder(req: Request, res: Response) {
     })
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' })
+      res.status(404).json({ message: 'User not found' })
+      return
     }
 
     // Validate if address exists
@@ -24,7 +26,8 @@ export async function createOrder(req: Request, res: Response) {
     })
 
     if (!address) {
-      return res.status(404).json({ message: 'Address not found' })
+      res.status(404).json({ message: 'Address not found' })
+      return
     }
 
     // Create order with products
@@ -55,11 +58,9 @@ export async function createOrder(req: Request, res: Response) {
       }
     })
 
-    return res
-      .status(201)
-      .json({ message: 'Order created successfully', order })
+    res.status(201).json({ message: 'Order created successfully', order })
   } catch (error) {
     console.error('Error creating order:', error)
-    return res.status(500).json({ message: 'Internal Server Error' })
+    res.status(500).json({ message: 'Internal Server Error' })
   }
 }

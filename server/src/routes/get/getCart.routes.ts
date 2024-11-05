@@ -3,13 +3,14 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function getCartItems(req: Request, res: Response) {
+export async function getCartItems(req: Request, res: Response): Promise<void> {
   try {
     const userId = Number(req.query.userId)
     if (!userId || isNaN(userId)) {
-      return res
+      res
         .status(400)
         .json({ message: 'User ID parameter is missing or invalid' })
+      return
     }
 
     // Find cart with cartItems and their associated products
@@ -44,7 +45,8 @@ export async function getCartItems(req: Request, res: Response) {
     })
 
     if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' })
+      res.status(404).json({ message: 'Cart not found' })
+      return
     }
 
     // Identify cart items with quantity 0
@@ -76,11 +78,9 @@ export async function getCartItems(req: Request, res: Response) {
         }
       })
 
-    return res.json(products)
+    res.json(products)
   } catch (error) {
     console.error('Error retrieving products from cart:', error)
-    return res
-      .status(500)
-      .json({ message: 'Error retrieving products from cart' })
+    res.status(500).json({ message: 'Error retrieving products from cart' })
   }
 }

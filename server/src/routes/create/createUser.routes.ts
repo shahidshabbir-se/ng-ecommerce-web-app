@@ -1,20 +1,24 @@
 import { prisma } from '@configs/prisma.config'
 import { Request, Response } from 'express'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { generateToken } from '@utils/jwt.util'
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { firstName, lastName, email, password } = req.body
   if (process.env.JWT_ACCESS_SECRET === undefined) {
-    return res.status(500).json({ message: 'JWT_ACCESS_SECRET is not defined' })
+    res.status(500).json({ message: 'JWT_ACCESS_SECRET is not defined' })
+    return
   }
   if (process.env.PEPPER === undefined) {
-    return res.status(500).json({ message: 'PEPPER is not defined' })
+    res.status(500).json({ message: 'PEPPER is not defined' })
+    return
   }
   if (process.env.JWT_REFRESH_SECRET === undefined) {
-    return res
-      .status(500)
-      .json({ message: 'JWT_REFRESH_SECRET is not defined' })
+    res.status(500).json({ message: 'JWT_REFRESH_SECRET is not defined' })
+    return
   }
   // Check if the user already exists
   const existingUser = await prisma.user.findUnique({
@@ -25,7 +29,8 @@ export const createUser = async (req: Request, res: Response) => {
 
   if (existingUser) {
     console.log('User already exists')
-    return res.status(201).json({ message: 'User already exists' })
+    res.status(201).json({ message: 'User already exists' })
+    return
   }
 
   // Hash the password
@@ -80,7 +85,7 @@ export const createUser = async (req: Request, res: Response) => {
       }
     }))
   }
-  return res
+  res
     .status(201)
     .json({ message: 'User created successfully', user: dataToSend })
 }

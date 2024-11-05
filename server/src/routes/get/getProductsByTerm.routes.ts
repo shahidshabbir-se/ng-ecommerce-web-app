@@ -3,7 +3,10 @@ import { prisma } from '@configs/prisma.config'
 import { Prisma } from '@prisma/client'
 import { ResultData } from '@interfaces/result.interfaces'
 
-export const getProductsByTerm = async (req: Request, res: Response) => {
+export const getProductsByTerm = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { term, startPoint } = req.query as {
       term: string
@@ -11,14 +14,14 @@ export const getProductsByTerm = async (req: Request, res: Response) => {
     }
 
     if (!term || !startPoint) {
-      return res
-        .status(400)
-        .json({ message: 'Missing required query parameters' })
+      res.status(400).json({ message: 'Missing required query parameters' })
+      return
     }
 
     const parsedStartPoint = parseInt(startPoint, 10)
     if (isNaN(parsedStartPoint)) {
-      return res.status(400).json({ message: 'Invalid startPoint parameter' })
+      res.status(400).json({ message: 'Invalid startPoint parameter' })
+      return
     }
 
     const pageSize = 40
@@ -132,15 +135,14 @@ export const getProductsByTerm = async (req: Request, res: Response) => {
 
     // If no products found, return 404
     if (processedProducts.length === 0) {
-      return res.status(404).json({ message: 'No products found' })
+      res.status(404).json({ message: 'No products found' })
+      return
     }
 
     // Return only products in response
-    return res.json(processedProducts)
+    res.json(processedProducts)
   } catch (error) {
     console.error('Error fetching products:', error)
-    return res
-      .status(500)
-      .json({ error: 'An error occurred while fetching products' })
+    res.status(500).json({ error: 'An error occurred while fetching products' })
   }
 }

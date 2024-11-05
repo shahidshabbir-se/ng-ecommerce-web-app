@@ -1,7 +1,7 @@
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import { prisma } from './prisma.config' // Ensure the path is correct
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 
 if (

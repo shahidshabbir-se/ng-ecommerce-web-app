@@ -67,11 +67,13 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
           key={product.productId}
         >
           {selectedImages[product.productId] && (
-            <img
+            <Image
               // className='h-full w-full'
               // objectFit='cover'
               // fill={true}
               className='h-full w-full'
+              width={400}
+              height={400}
               src={
                 hoveredImages[product.productId] ||
                 selectedImages[product.productId]

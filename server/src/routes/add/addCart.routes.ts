@@ -3,22 +3,26 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function updateOrAddCartItem(req: Request, res: Response) {
+export async function updateOrAddCartItem(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const { userId, productId, quantity, variantId, size } = req.body
 
     // Validate incoming data
     if (!userId) {
-      return res.status(400).json({ message: 'Please Login or Register' })
+      res.status(400).json({ message: 'Please Login or Register' })
+      return
     }
 
     if (!productId || !quantity || !variantId || !size) {
-      return res.status(400).json({ message: 'Missing required fields' })
+      res.status(400).json({ message: 'Missing required fields' })
+      return
     }
     if (quantity <= 0) {
-      return res
-        .status(400)
-        .json({ message: 'Quantity must be greater than 0' })
+      res.status(400).json({ message: 'Quantity must be greater than 0' })
+      return
     }
 
     // Check if the user exists
@@ -26,7 +30,8 @@ export async function updateOrAddCartItem(req: Request, res: Response) {
       where: { userId }
     })
     if (!user) {
-      return res.status(404).json({ message: 'User not found' })
+      res.status(404).json({ message: 'User not found' })
+      return
     }
 
     // Check if the cart exists
@@ -41,13 +46,15 @@ export async function updateOrAddCartItem(req: Request, res: Response) {
     })
 
     if (!productVariant) {
-      return res.status(404).json({ message: 'Product variant not found' })
+      res.status(404).json({ message: 'Product variant not found' })
+      return
     }
 
     // If cart doesn't exist, create a new cart
     if (!cart) {
       if (productVariant?.stock < quantity) {
-        return res.status(400).json({ message: 'Insufficient stock' })
+        res.status(400).json({ message: 'Insufficient stock' })
+        return
       }
 
       cart = await prisma.cart.create({
@@ -71,7 +78,7 @@ export async function updateOrAddCartItem(req: Request, res: Response) {
         data: { stock: { decrement: quantity } }
       })
 
-      return res
+      res
         .status(201)
         .json({ message: 'Cart item added', cartItem: cart.cartItems[0] })
     }
@@ -87,7 +94,8 @@ export async function updateOrAddCartItem(req: Request, res: Response) {
     if (!existingCartItem) {
       // Add new cart item
       if (!productVariant || productVariant.stock < quantity) {
-        return res.status(400).json({ message: 'Insufficient stock' })
+        res.status(400).json({ message: 'Insufficient stock' })
+        return
       }
       const newCartItem = await prisma.cartProduct.create({
         data: {
@@ -105,13 +113,14 @@ export async function updateOrAddCartItem(req: Request, res: Response) {
         data: { stock: { decrement: quantity } }
       })
 
-      return res
+      res
         .status(201)
         .json({ message: 'Cart item added', cartItem: newCartItem })
+      return
     }
 
     if (existingCartItem.quantity === quantity) {
-      return res.status(200).json({
+      res.status(200).json({
         message: 'Cart item quantity is the same',
         cartItem: existingCartItem
       })
@@ -122,7 +131,8 @@ export async function updateOrAddCartItem(req: Request, res: Response) {
       !productVariant ||
       productVariant.stock + existingCartItem.quantity < quantity
     ) {
-      return res.status(400).json({ message: 'Insufficient stock' })
+      res.status(400).json({ message: 'Insufficient stock' })
+      return
     }
     const totalStock = productVariant.stock + existingCartItem.quantity
 
@@ -136,11 +146,11 @@ export async function updateOrAddCartItem(req: Request, res: Response) {
       data: { stock: totalStock - quantity }
     })
 
-    return res
+    res
       .status(200)
       .json({ message: 'Cart item updated', cartItem: updatedCartItem })
   } catch (error) {
     console.error('Error adding or updating cart item:', error)
-    return res.status(500).json({ message: 'Internal server error' })
+    res.status(500).json({ message: 'Internal server error' })
   }
 }

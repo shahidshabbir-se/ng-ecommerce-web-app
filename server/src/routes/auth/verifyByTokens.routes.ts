@@ -5,25 +5,32 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-export const verifyByTokens = async (req: Request, res: Response) => {
-  // Retrieve access token from headers
+export const verifyByTokens = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const accessToken = req.headers['accesstoken'] as string
 
   if (!accessToken) {
-    return res.status(401).json({ message: 'Access token is required' })
+    res
+      .status(401)
+      .json({ message: 'Access token is required for authentication.' })
+    return
   }
 
   if (!process.env.JWT_ACCESS_SECRET) {
-    return res.status(500).json({ message: 'JWT_ACCESS_SECRET is not defined' })
+    res.status(500).json({
+      message: 'Server configuration error: JWT secret is not defined.'
+    })
+    return
   }
 
   try {
-    // Decrypt and verify the token
     const decodedToken = verifyToken(accessToken, process.env.JWT_ACCESS_SECRET)
     const email = decodedToken.email
+
     const user = await prisma.user.findUnique({
       where: { email },
-      // send email, name, and id
       include: {
         cart: true,
         orders: true,
@@ -33,12 +40,17 @@ export const verifyByTokens = async (req: Request, res: Response) => {
     })
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' })
+      res
+        .status(404)
+        .json({ message: 'No user associated with this token was found.' })
+      return
     }
 
-    return res.status(200).json(user)
+    res.status(200).json({ message: 'User verified successfully.', user })
   } catch (error) {
-    // console.error('Error verifying token:', error.message); // Log the error for debugging
-    return res.status(401).json({ message: 'Invalid access token' })
+    console.error('Error during token verification:', error)
+    res
+      .status(401)
+      .json({ message: 'The access token provided is invalid or expired.' })
   }
 }

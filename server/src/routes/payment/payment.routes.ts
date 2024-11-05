@@ -3,7 +3,10 @@ import Stripe from 'stripe'
 import dotenv from 'dotenv'
 dotenv.config()
 
-export const createPayment = async (req: Request, res: Response) => {
+export const createPayment = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { email, amount, paymentMethodId } = req.body
   if (
     !req.body ||
@@ -11,11 +14,13 @@ export const createPayment = async (req: Request, res: Response) => {
     !req.body.amount ||
     !req.body.paymentMethodId
   ) {
-    return res.status(400).send('Invalid request. Missing required parameter.')
+    res.status(400).send('Invalid request. Missing required parameter.')
+    return
   }
 
   if (process.env.STRIPE_SECRET_KEY === undefined) {
-    return res.status(500).send('Server error. Please try again later.')
+    res.status(500).send('Server error. Please try again later.')
+    return
   }
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)

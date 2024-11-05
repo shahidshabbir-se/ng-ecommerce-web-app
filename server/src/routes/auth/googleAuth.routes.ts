@@ -1,13 +1,17 @@
 import { Response, Request } from 'express'
 import { generateToken } from '@utils/jwt.util'
 
-export async function handleGoogleAuthCallback(req: Request, res: Response) {
+export async function handleGoogleAuthCallback(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const user = req.user as { email: string; userId: string }
     if (!process.env.JWT_ACCESS_SECRET || !process.env.JWT_REFRESH_SECRET) {
-      return res.status(500).json({
+      res.status(500).json({
         message: 'JWT_ACCESS and JWT_REFRESH secrets are not defined'
       })
+      return
     }
     const accessToken = generateToken(user, '1h', process.env.JWT_ACCESS_SECRET)
 
@@ -32,6 +36,6 @@ export async function handleGoogleAuthCallback(req: Request, res: Response) {
     res.redirect(`${process.env.CLIENT_URL}/`)
   } catch (error) {
     console.error('Error creating or updating user:', error)
-    return res.status(500).json({ message: 'Internal server error' })
+    res.status(500).json({ message: 'Internal server error' })
   }
 }
