@@ -1,7 +1,7 @@
 'use client'
 import { useOutsideClick } from '@hooks/clickOutside.hooks'
 import { useAuthAsideVisibilityStore } from '@store/index'
-import { Fragment, useState,useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Sidebar from './sidebar'
 import { authState } from '@interfaces/auth.interfaces'
 import icons from '@icons'
@@ -10,7 +10,6 @@ const Index = () => {
   const [authState, setAuthState] = useState<authState>({
     currentState: 'auth'
   })
-
 
   const handleAuthStateChange = (newState: 'auth' | 'register' | 'login') => {
     setTimeout(() => {
@@ -39,8 +38,7 @@ const Index = () => {
       <div
         className={`${
           authAsideVisibility ? 'translate-x-0' : 'translate-x-full'
-        } fixed left-0 top-0 z-[2000] h-screen w-screen
-            transform transition-transform duration-500`}
+        } fixed left-0 top-0 z-[2000] h-screen w-screen transform transition-transform duration-500`}
       >
         <div ref={ref}>
           <button

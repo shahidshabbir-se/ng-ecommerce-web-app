@@ -1,9 +1,6 @@
 import generateEncryptedToken from '@services/genEncryptedToken.services'
 
 async function genTokens(userId: number) {
-  if(!userId) {
-    console.error('Error generating tokens: userId is required')
-  }
   const accessEncryptedToken = await generateEncryptedToken(
     process.env.ACCESS_JWT_SECRET as string,
     userId,

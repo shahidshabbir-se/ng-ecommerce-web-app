@@ -1,17 +1,20 @@
 import { Response, Request } from 'express'
 import { prisma } from '@configs/prisma.config'
 
-export async function delFromCart(req: Request, res: Response) {
+export async function delFromCart(req: Request, res: Response): Promise<void> {
   try {
     const { userId, variantId, size } = req.body
     if (!userId) {
-      return res.status(400).json({ message: 'User ID is required' })
+      res.status(400).json({ message: 'User ID is required' })
+      return
     }
     if (!variantId) {
-      return res.status(400).json({ message: 'Variant ID is required' })
+      res.status(400).json({ message: 'Variant ID is required' })
+      return
     }
     if (!size) {
-      return res.status(400).json({ message: 'Size is required' })
+      res.status(400).json({ message: 'Size is required' })
+      return
     }
 
     // Check if the cart for the user exists
@@ -25,9 +28,8 @@ export async function delFromCart(req: Request, res: Response) {
     })
 
     if (!cart) {
-      return res
-        .status(404)
-        .json({ message: "Haven't added any product to cart" })
+      res.status(404).json({ message: "Haven't added any product to cart" })
+      return
     }
 
     // Check if the product exists in the cart
@@ -40,7 +42,8 @@ export async function delFromCart(req: Request, res: Response) {
     })
 
     if (!cartProduct) {
-      return res.status(404).json({ message: 'Product not found in the cart' })
+      res.status(404).json({ message: 'Product not found in the cart' })
+      return
     }
 
     // Product exists in the cart, delete it
@@ -61,9 +64,9 @@ export async function delFromCart(req: Request, res: Response) {
       }
     })
 
-    return res.json({ message: 'Product removed from the cart' })
+    res.json({ message: 'Product removed from the cart' })
   } catch (error) {
     console.error('Error removing cart item:', error)
-    return res.status(500).json({ message: 'Error removing cart item' })
+    res.status(500).json({ message: 'Error removing cart item' })
   }
 }
