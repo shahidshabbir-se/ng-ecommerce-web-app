@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: 'selector', // add this line
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -38,6 +39,7 @@ const config: Config = {
         'red-400': '#EF4444',
         'red-500': '#e00034',
         'pink-500': '#FC2073',
+        'dark-bg': '#313131',
         'slate-500': '#737373'
       },
       boxShadow: {
