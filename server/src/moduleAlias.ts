@@ -8,7 +8,8 @@ function setupModuleAliases(): void {
     '@interfaces': __dirname + '/interfaces',
     '@middlewares': __dirname + '/middlewares',
     '@services': __dirname + '/services',
-    '@auth': __dirname + '/auth'
+    '@auth': __dirname + '/auth',
+    '@utils': __dirname + '/utils'
   })
 }
 

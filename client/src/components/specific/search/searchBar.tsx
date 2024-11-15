@@ -93,7 +93,7 @@ export default function SearchBar() {
       </div>
       {searchBarVisibility && (
         <div
-          className={`fixed left-0 top-0 flex h-screen w-screen items-center bg-gray-500/65 z-[1999] duration-500`}
+          className={`fixed left-0 top-0 z-[1999] flex h-screen w-screen items-center bg-gray-500/65 duration-500`}
         >
           {loading && <p>Loading ...</p>}
         </div>

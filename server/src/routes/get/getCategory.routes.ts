@@ -1,11 +1,12 @@
 import { prisma } from '@configs/prisma.config'
 import { Request, Response } from 'express'
 
-export async function getCategory(req: Request, res: Response) {
+export async function getCategory(req: Request, res: Response): Promise<void> {
   const { id } = req.params
   try {
     if (!id) {
-      return res.status(400).json({ error: 'Missing categoryId' })
+      res.status(400).json({ error: 'Missing categoryId' })
+      return
     }
     const category = await prisma.category.findFirst({
       where: {
@@ -13,10 +14,11 @@ export async function getCategory(req: Request, res: Response) {
       }
     })
     if (!category) {
-      return res.status(404).json({ error: 'Category not found' })
+      res.status(404).json({ error: 'Category not found' })
+      return
     }
-    return res.status(200).json(category)
+    res.status(200).json(category)
   } catch (error) {
-    return res.status(500).json({ error: error })
+    res.status(500).json({ error: error })
   }
 }
