@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import setupModuleAliases from './moduleAlias'
-dotenv.config()
+dotenv.config({ path: '../.env' })
 setupModuleAliases()
 import express from 'express'
 import cookieParser from 'cookie-parser'
@@ -8,8 +8,6 @@ import cors from 'cors'
 import passport from '@configs/passport.config'
 import { connectDB } from '@configs/prisma.config'
 import router from '../src/routes/export.routes'
-
-// Load environment variables
 
 const corsOptions = {
   origin: 'http://localhost:3000',

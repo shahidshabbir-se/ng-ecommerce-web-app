@@ -1,16 +1,17 @@
 import { Request, Response } from 'express'
 import { prisma } from '@configs/prisma.config'
 import jwt from 'jsonwebtoken'
-import passport from 'passport'
+import bcrypt from 'bcryptjs'
 
 export const login = async (req: Request, res: Response) => {
-  const genrateToken = (userId) => {
+  const generateToken = (userId: string, email: string) => {
     return jwt.sign(
-      { id: user.id, email: user.email },
-      process.env.JWT_SECRET,
-      {}
+      { id: userId, email: email },
+      process.env.JWT_SECRET as string,
+      { expiresIn: '1h' } // example expiration time
     )
   }
+
   const { email, password } = req.body
   const user = await prisma.user.findUnique({
     where: {
@@ -22,9 +23,12 @@ export const login = async (req: Request, res: Response) => {
     return res.status(404).json({ message: 'User not found' })
   }
 
-  if (user.password !== password) {
+  const isPasswordValid = await bcrypt.compare(password, user.password)
+  if (!isPasswordValid) {
     return res.status(401).json({ message: 'Invalid password' })
   }
 
-  return res.status(200).json({ user })
+  const token = generateToken(user.id, user.email)
+
+  return res.status(200).json({ user, token })
 }

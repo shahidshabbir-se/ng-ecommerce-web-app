@@ -63,15 +63,12 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
       {resultData.map((product) => (
         <Link
           href={'#'}
-          className='grid max-w-[400px] pb-2 md:pr-2'
+          className='relative grid max-w-[400px] pb-2 md:pr-2'
           key={product.productId}
         >
           {selectedImages[product.productId] && (
-            <img
-              // className='h-full w-full'
-              // objectFit='cover'
-              // fill={true}
-              className='h-full w-full'
+            <Image
+              layout='fill'
               src={
                 hoveredImages[product.productId] ||
                 selectedImages[product.productId]

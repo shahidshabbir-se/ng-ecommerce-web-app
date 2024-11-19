@@ -1,14 +1,20 @@
 import React from 'react'
+import Image from 'next/image'
 
 interface GalleryProps {
-  image: string | undefined // Image URL for the selected variant
+  image: string | undefined
 }
 
 const Gallery: React.FC<GalleryProps> = ({ image }) => {
   return (
-    <div className='w-[316px]'>
+    <div className='relative w-[316px]'>
       {image ? (
-        <img src={image} alt='product' className='h-full w-full object-cover' />
+        <Image
+          src={image}
+          alt='product'
+          layout='fill'
+          className='object-cover'
+        />
       ) : (
         <p>No image available</p>
       )}

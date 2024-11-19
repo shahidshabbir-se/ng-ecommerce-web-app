@@ -24,9 +24,7 @@ const Links: React.FC<LinksProps> = ({ links }) => {
       {links.map((link, index) => (
         <div
           key={index}
-          className={`group flex h-[60px] items-center
-            ${index !== 0 && index !== 2 && ' border-x border-transparent hover:border-gray-300 '}
-          `}
+          className={`group flex h-[60px] items-center ${index !== 0 && index !== 2 && 'border-x border-transparent hover:border-gray-300'} `}
         >
           {link.href ? (
             <Link
