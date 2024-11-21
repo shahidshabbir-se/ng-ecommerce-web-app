@@ -8,7 +8,8 @@ export async function getBrandByName(req: Request, res: Response) {
 
   try {
     if (!brandName) {
-      return res.status(400).json({ message: 'brandName is required' })
+      res.status(400).json({ message: 'brandName is required' })
+      return
     }
 
     // Fetch the brand by id
@@ -19,12 +20,13 @@ export async function getBrandByName(req: Request, res: Response) {
     })
 
     if (!brand) {
-      return res.status(404).json({ message: 'Brand not found' })
+      res.status(404).json({ message: 'Brand not found' })
+      return
     }
 
-    return res.status(200).json(brand)
+    res.status(200).json(brand)
   } catch (error) {
     console.error('Error in getBrand:', error)
-    return res.status(500).json({ message: 'Internal server error' })
+    res.status(500).json({ message: 'Internal server error' })
   }
 }
