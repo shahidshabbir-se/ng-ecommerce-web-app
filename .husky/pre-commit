@@ -1,2 +1,2 @@
-pnpm run lint:server && pnpm run lint:client && pnpm run format:server && pnpm run format:client
+pnpm run lint-server && pnpm run lint-client && pnpm run format-server && pnpm run format-client
 git update-index --again
