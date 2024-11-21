@@ -39,7 +39,7 @@ export default function MegaMenu() {
         {MenuData.map((menu: MenuProps) => (
           <div key={menu.anchorLabel} className='group'>
             {activeMenu && (
-              <div className='absolute left-0 top-[60px] -z-10 h-screen w-screen bg-[#858585]/50 ' />
+              <div className='absolute left-0 top-[60px] -z-10 h-screen w-screen bg-[#858585]/50' />
             )}
             {menu.anchorLink ? (
               <Link

@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import NavBar from '@components/nav/navBar'
-import SearchBar from '@components/specific/search/searchBar'
-import Index from '@components/auth'
+import Bar from '@components/bar/bar'
 
 export const metadata: Metadata = {
   title: "Women's Clothes | Women's Fashion Online | Nasty Gal",
@@ -20,11 +18,9 @@ export default function RootLayout({
       <head>
         <link rel='icon' href='/favicon.svg' type='image/x-icon' />
       </head>
-      <body>
-        <NavBar />
-        <SearchBar />
-        <Index />
-        <div className='relative mt-[48px] md:mt-[60px]'>{children}</div>
+      <body className='dark:bg-black'>
+        <Bar />
+        {children}
       </body>
     </html>
   )

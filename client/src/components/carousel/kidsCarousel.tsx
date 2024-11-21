@@ -39,7 +39,7 @@ const KidsCarousel = () => {
           <img
             src={leftImage}
             alt='left'
-            className='h-full xl:w-1/2 w-full object-cover'
+            className='h-full w-full object-cover xl:w-1/2'
           />
           {!isMobile && (
             <Swiper
@@ -99,13 +99,13 @@ const KidsCarousel = () => {
 
 const Promo = () => {
   return (
-    <div className='absolute left-12 bottom-12 text-center text-[40px] text-white xl:text-left'>
+    <div className='absolute bottom-12 left-12 text-center text-[40px] text-white xl:text-left'>
       <h1 className='absolute bottom-72'>New School</h1>
-      <p className='text-sm w-96 my-6'>
+      <p className='my-6 w-96 text-sm'>
         Big pockets. Relaxed fits. Neutral shades. New workwear-inspired
         essentials to inspire your summer.
       </p>
-      <div className='flex gap-5 text-black text-base'>
+      <div className='flex gap-5 text-base text-black'>
         <Link href={'/'} className='flex h-8 items-center bg-white px-5'>
           Shop Back To School
           <span>

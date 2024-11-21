@@ -1,4 +1,4 @@
-import { PiShoppingBagThin } from 'react-icons/pi'
+import { IoBagOutline } from 'react-icons/io5'
 import { CiSearch } from 'react-icons/ci'
 import { PiHeartThin } from 'react-icons/pi'
 import { PiUserThin } from 'react-icons/pi'
@@ -12,7 +12,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { RxHamburgerMenu } from 'react-icons/rx'
 
 const icons = {
-  cart: PiShoppingBagThin,
+  cart: IoBagOutline,
   search: CiSearch,
   heart: PiHeartThin,
   user: PiUserThin,

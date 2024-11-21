@@ -16,7 +16,6 @@ export async function createProduct(req: Request, res: Response) {
       productVariants
     }: ProductDataInput = req.body
 
-    // Validate required fields
     if (
       !productName ||
       !productDescription ||
@@ -27,42 +26,42 @@ export async function createProduct(req: Request, res: Response) {
       !productVariants ||
       !productVariants.length
     ) {
-      return res.status(400).json({
+      res.status(400).json({
         message:
           'Product name, description, category, price, brand, and variants are required'
       })
+      return
     }
 
-    // Check if the category exists
     const category = await prisma.category.findUnique({
       where: { categoryId }
     })
 
     if (!category) {
-      return res.status(404).json({ message: 'Category not found' })
+      res.status(404).json({ message: 'Category not found' })
+      return
     }
 
-    // Check if the brand exists
     const brand = await prisma.brand.findUnique({
       where: { brandId }
     })
 
     if (!brand) {
-      return res.status(404).json({ message: 'Brand not found' })
+      res.status(404).json({ message: 'Brand not found' })
+      return
     }
 
-    // Check if the coupon exists (if provided)
     if (couponId) {
       const coupon = await prisma.coupon.findUnique({
         where: { couponId }
       })
 
       if (!coupon) {
-        return res.status(404).json({ message: 'Coupon not found' })
+        res.status(404).json({ message: 'Coupon not found' })
+        return
       }
     }
 
-    // Create the product along with variants
     const product = await prisma.product.create({
       data: {
         productName,
@@ -70,8 +69,8 @@ export async function createProduct(req: Request, res: Response) {
         productCare,
         regPrice,
         salePrice,
-        averageRating: 0, // Initial value, can be adjusted
-        soldCount: 0, // Initial value, can be adjusted
+        averageRating: 0,
+        soldCount: 0,
         createdAt: new Date(),
         updatedAt: new Date(),
         categoryId,
@@ -88,9 +87,9 @@ export async function createProduct(req: Request, res: Response) {
       }
     })
 
-    return res.status(201).json({ message: 'Product created', product })
+    res.status(201).json({ message: 'Product created', product })
   } catch (error) {
     console.error('Error creating product:', error)
-    return res.status(500).json({ message: 'Internal server error' })
+    res.status(500).json({ message: 'Internal server error' })
   }
 }

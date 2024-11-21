@@ -17,12 +17,15 @@ export default function gallery({ images }: { images: string[] }) {
     <div>
       <Slider {...settings}>
         {images.map((image, index) => (
-          // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
-          <img
-            key={index}
-            src={image}
-            className='aspect-[580/772] w-full object-cover'
-          />
+          <div className='relative w-full'>
+            <Image
+              key={index}
+              src={image}
+              alt='Product Image'
+              layout='fill'
+              className='aspect-[580/772] object-cover'
+            />
+          </div>
         ))}
       </Slider>
     </div>

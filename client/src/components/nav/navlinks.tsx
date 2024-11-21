@@ -16,7 +16,7 @@ interface Link {
 }
 
 const Links: React.FC<LinksProps> = ({ links }) => {
-  const iconsStyle = 'size-6 lg:group-hover:text-gray-600'
+  const iconsStyle = 'size-6 group-hover:text-gray-600'
   const buttonStyle = 'size-[34px] text-black items-center flex justify-center'
 
   return (
@@ -24,36 +24,30 @@ const Links: React.FC<LinksProps> = ({ links }) => {
       {links.map((link, index) => (
         <div
           key={index}
-          className={`group flex h-[60px] items-center
-            ${index !== 0 && index !== 2 && ' border-x border-transparent lg:hover:border-gray-300 '}
-          `}
+          className={`group flex h-[60px] items-center ${index !== 0 && index !== 2 && 'border-x border-transparent hover:border-gray-300'} `}
         >
           {link.href ? (
-            <div
-              className={`${link.href === '/cart' ? 'hidden' : 'absolute left-[34px] md:static'}`}
+            <Link
+              className={`${buttonStyle} group-hover:text-gray-600`}
+              href={link.href}
             >
-              <Link
-                className={`${buttonStyle} lg:group-hover:text-gray-600`}
-                href={link.href}
-              >
-                {link.icon &&
-                  React.isValidElement(link.icon) &&
-                  React.cloneElement(link.icon as React.ReactElement<any>, {
-                    className: link.iconStyle
-                  })}
-              </Link>
-            </div>
+              {link.icon &&
+                React.isValidElement(link.icon) &&
+                React.cloneElement(link.icon as React.ReactElement<any>, {
+                  className: link.iconStyle
+                })}
+            </Link>
           ) : (
             <div className='group'>
               {link.label === 'search' ? (
                 <SearchButton
                   iconStyle={iconsStyle}
-                  buttonStyle={`${buttonStyle} absolute md:static right-[34px] top-1/2 md:translate-y-0 -translate-y-1/2`}
+                  buttonStyle={buttonStyle}
                 />
               ) : link.label === 'account' ? (
                 <AccountButton
                   iconStyle={iconsStyle}
-                  buttonStyle={`${buttonStyle} absolute md:static right-0 top-1/2 md:translate-y-0 -translate-y-1/2`}
+                  buttonStyle={buttonStyle}
                 />
               ) : (
                 ''

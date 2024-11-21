@@ -1,4 +1,4 @@
-import { ResultData,UniqueFilters } from "@interfaces/results.interface"
+import { ResultData, UniqueFilters } from '@interfaces/results.interface'
 
 export const aggregateUniqueFilters = (products: ResultData[]) => {
   const sizes = new Set<string>()

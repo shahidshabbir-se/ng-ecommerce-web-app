@@ -93,7 +93,7 @@ export default function Bar() {
       </div>
       {searchBarVisibility && (
         <div
-          className={`fixed left-0 top-0 flex h-screen w-screen items-center justify-center ${loading ? 'z-[2000] bg-gray-500' : 'z-[50] bg-gray-500  opacity-65 duration-300'}`}
+          className={`fixed left-0 top-0 flex h-screen w-screen items-center justify-center ${loading ? 'z-[2000] bg-gray-500' : 'z-[50] bg-gray-500 opacity-65 duration-300'}`}
         >
           {loading && <p>Loading ...</p>}
         </div>
