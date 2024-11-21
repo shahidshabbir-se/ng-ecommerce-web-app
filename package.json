@@ -2,10 +2,6 @@
   "dependencies": {
     "concurrently": "^9.1.0"
   },
-  "devDependencies": {
-    "husky": "^9.1.7",
-    "lint-staged": "^15.2.10"
-  },
   "scripts": {
     "dev": "concurrently \"pnpm run server\" \"pnpm run client\"",
     "server": "cd server && pnpm run dev",
@@ -13,7 +9,7 @@
     "install-client": "cd client && pnpm install",
     "install-server": "cd server && pnpm install",
     "install": "concurrently \"pnpm run install-server\" \"pnpm run install-client\"",
- "build-client": "cd client && pnpm build",
+    "build-client": "cd client && pnpm build",
     "build-server": "cd server && pnpm build",
     "build": "concurrently \"pnpm run build-server\" \"pnpm run build-client\"",
     "start-client": "cd client && pnpm start",
@@ -25,13 +21,9 @@
     "format-client": "cd client && pnpm run format",
     "format-server": "cd server && pnpm run format",
     "format": "concurrently \"pnpm run format-server\" \"pnpm run format-client\"",
-    "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "prepare": "husky"
   },
-  "lint-staged": {
-    "*.{js,ts,jsx,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
+  "devDependencies": {
+    "husky": "^9.1.7"
   }
 }
