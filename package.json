@@ -20,6 +20,10 @@
     "lint": "concurrently \"pnpm run lint-server\" \"pnpm run lint-client\"",
     "format-client": "cd client && pnpm run format",
     "format-server": "cd server && pnpm run format",
-    "format": "concurrently \"pnpm run format-server\" \"pnpm run format-client\""
+    "format": "concurrently \"pnpm run format-server\" \"pnpm run format-client\"",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
   }
 }
