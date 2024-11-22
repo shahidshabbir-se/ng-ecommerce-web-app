@@ -18,7 +18,7 @@ export default function RootLayout({
       <head>
         <link rel='icon' href='/favicon.svg' type='image/x-icon' />
       </head>
-      <body className='dark:bg-black'>
+      <body className='border-[#2222221a] bg-[url("https://uk.p448.com/cdn/shop/files/CTA-SINGLE_4200x2940_DSK-P448-US-UK.jpg?v=1731687329&width=4200")] bg-cover dark:bg-[#313131] dark:text-white'>
         <Bar />
         {children}
       </body>
