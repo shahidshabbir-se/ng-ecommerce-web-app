@@ -81,7 +81,8 @@ export async function createProduct(req: Request, res: Response) {
             variantName: variant.variantName,
             stock: variant.stock,
             color: variant.color,
-            size: variant.size
+            size: variant.size,
+            images: variant.images
           }))
         }
       }

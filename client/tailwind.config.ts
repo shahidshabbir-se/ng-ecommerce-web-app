@@ -18,10 +18,9 @@ const config: Config = {
       '2xl': '24px'
     },
     fontFamily: {
-      regular: ['NG-Grotesque-Regular', 'sans-serif'],
-      bold: ['NG-Grotesque-Bold', 'sans-serif'],
-      extraBold: ['NG-Grotesque-ExtraBold', 'sans-serif'],
-      chronicle: ['Chronicle', 'serif']
+      regular: ['Apercu-Pro-Regular', 'sans-serif'],
+      bold: ['Apercu-Pro-Bold', 'sans-serif'],
+      medium: ['Apercu-Pro-Medium', 'sans-serif']
     },
     extend: {
       colors: {

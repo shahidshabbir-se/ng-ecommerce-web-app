@@ -1,12 +1,13 @@
-import { ResultData, UniqueFilters } from '@interfaces/results.interface'
+import { UniqueFilters } from '@interfaces/results.interface'
+import { ProductSearchByTerm } from '@shared_interfaces/productSearchByTerm.interfaces'
 
-export const aggregateUniqueFilters = (products: ResultData[]) => {
+export const aggregateUniqueFilters = (products: ProductSearchByTerm[]) => {
   const sizes = new Set<string>()
   const categories = new Set<string>()
   const brands = new Set<string>()
   products.forEach((product) => {
     product.productVariants.forEach((variant) => {
-      variant.size.forEach((size) => {
+      variant.sizes.forEach((size) => {
         sizes.add(size)
       })
     })
@@ -15,7 +16,7 @@ export const aggregateUniqueFilters = (products: ResultData[]) => {
     categories.add(product.categoryName)
   })
   products.forEach((product) => {
-    brands.add(product.brandName)
+    brands.add(product.brand.brandName)
   })
   const uniqueFilters: UniqueFilters = {
     sizes,

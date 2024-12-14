@@ -1,7 +1,6 @@
 import { Response, Request } from 'express'
 import { prisma } from '@configs/prisma.config'
-import { Prisma } from '@prisma/client'
-import { ResultData } from '@interfaces/result.interfaces'
+import { ProductSearchByTerm } from '@shared_interfaces/productSearchByTerm.interfaces'
 
 export const getProductsByTerm = async (
   req: Request,
@@ -24,35 +23,23 @@ export const getProductsByTerm = async (
       return
     }
 
-    const pageSize = 40
+    const pageSize = 20
 
-    // Fetch category IDs matching the term
+    const searchTerms = term.split(/\s+/)
     const categories = await prisma.category.findMany({
       where: {
-        OR: [
-          {
-            categoryName: {
-              contains: term,
-              mode: 'insensitive'
-            }
-          },
-          {
-            categoryDescription: {
-              contains: term,
-              mode: 'insensitive'
-            } as Prisma.StringFilter
-          }
-        ]
+        OR: searchTerms.map((word) => ({
+          OR: [
+            { categoryName: { contains: word, mode: 'insensitive' } },
+            { categoryDescription: { contains: word, mode: 'insensitive' } }
+          ]
+        }))
       },
-      select: {
-        categoryId: true
-      }
+      select: { categoryId: true }
     })
 
-    // Extract categoryIds from the retrieved categories
     const categoryIds = categories.map((category) => category.categoryId)
 
-    // Fetch products that match either the productName or the categoryId
     const products = await prisma.product.findMany({
       where: {
         OR: [
@@ -80,9 +67,9 @@ export const getProductsByTerm = async (
             categoryName: true
           }
         },
-        soldCount: true,
         brand: {
           select: {
+            brandId: true,
             brandName: true
           }
         },
@@ -92,8 +79,8 @@ export const getProductsByTerm = async (
             variantName: true,
             variantId: true,
             images: true,
-            size: true,
-            color: true
+            color: true,
+            size: true
           }
         }
       },
@@ -105,41 +92,36 @@ export const getProductsByTerm = async (
     const processedProducts = products.map((product) => {
       const variantsWithFirstImage = product.productVariants.map((variant) => ({
         ...variant,
-        images: variant.images.length > 0 ? [variant.images[0]] : []
+        images: variant.images.length > 0 ? [variant.images[0]] : [],
+        sizes: variant.size
       }))
-      const calculateDiscount = (regPrice: number, salePrice: number) => {
-        const discount = ((regPrice - salePrice) / regPrice) * 100
-        return Math.round(discount).toString() + '%'
-      }
-      const productData: ResultData = {
+
+      const productData: ProductSearchByTerm = {
         productId: product.productId,
         productName: product.productName,
         regPrice: product.regPrice,
         categoryId: product.categoryId,
         categoryName: product.productCategory.categoryName,
-        brandName: product.brand.brandName,
+        brand: {
+          brandId: product.brand.brandId,
+          brandName: product.brand.brandName
+        },
         updatedAt: product.updatedAt,
         productVariants: variantsWithFirstImage
       }
-      if (product.salePrice !== null) {
+
+      if (product.salePrice != null) {
         productData.salePrice = product.salePrice
       }
-      if (productData.salePrice && productData.regPrice) {
-        productData.discount = calculateDiscount(
-          productData.regPrice,
-          productData.salePrice
-        )
-      }
+
       return productData
     })
 
-    // If no products found, return 404
     if (processedProducts.length === 0) {
       res.status(404).json({ message: 'No products found' })
       return
     }
 
-    // Return only products in response
     res.json(processedProducts)
   } catch (error) {
     console.error('Error fetching products:', error)

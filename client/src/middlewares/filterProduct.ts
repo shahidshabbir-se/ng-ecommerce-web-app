@@ -49,6 +49,5 @@ export function filterProduct(data: ResultData[], filter: FilterData) {
       )
     })
   }
-
   return filteredData
 }
