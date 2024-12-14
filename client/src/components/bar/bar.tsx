@@ -14,8 +14,8 @@ const Bar = () => {
   ]
   return (
     <div className='flex flex-col'>
-      <div className='left-0 top-[30px] flex h-12 w-screen items-center gap-2 overflow-hidden overflow-x-hidden border-r border-[#ffffff1a] bg-[#0e3cf6] lg:absolute lg:order-2 lg:h-[calc(100vh-30px)] lg:w-[201px] lg:flex-col lg:items-start lg:bg-transparent lg:p-5'>
-        <div className='flex w-[100px] items-center justify-center rounded-[5px] border-r border-[#ffffff1a] lg:w-full lg:flex-col lg:bg-[#0e3cf6]'>
+      <div className='left-0 top-[30px] z-50 flex h-12 w-screen items-center gap-2 overflow-hidden overflow-x-hidden bg-[#0e3cf6] lg:fixed lg:order-2 lg:h-[calc(100vh-66px)] lg:w-[202px] lg:flex-col lg:items-start lg:bg-transparent lg:p-5'>
+        <div className='flex w-[100px] items-center justify-center rounded-[5px] border-r lg:w-full lg:flex-col lg:bg-[#0e3cf6] dark:border-[#ffffff1a]'>
           <Link href='/' className='relative m-4 h-8 w-[80%] lg:h-14'>
             <Image
               src='/logo.svg'
@@ -65,8 +65,8 @@ const Bar = () => {
           </div>
         </div>
       </div>
-      <div className='flex h-[30px] items-center bg-[#222222] text-sm text-white lg:order-1'>
-        <span className='order-2 flex h-full w-[230px] items-center justify-between border-l border-[#383838] px-5 text-left lg:order-1 lg:border-r'>
+      <div className='z-[1000] flex h-[30px] items-center bg-[#222222] text-sm text-white lg:fixed lg:order-1 lg:w-screen dark:bg-[#E6E3E6] dark:text-black'>
+        <span className='order-2 flex h-full w-[230px] items-center justify-between border-l border-[#646464] px-5 text-left lg:order-1 lg:border-r dark:border-[#D2CFD2]'>
           <p>LIGHT MODE</p>
           <ThemeButton />
         </span>

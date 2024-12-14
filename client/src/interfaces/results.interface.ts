@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export interface ResultData {
   productId: number
   productName: string
@@ -18,6 +19,28 @@ export interface ProductVariants {
   size: string[]
   color: string
 }
+=======
+// export interface ResultData {
+//   productId: number
+//   productName: string
+//   regPrice: number
+//   salePrice?: number
+//   categoryId: number
+//   categoryName: string
+//   brandName: string
+//   updatedAt: Date
+//   discount?: string
+//   productVariants: ProductVariants[]
+// }
+
+// export interface ProductVariants {
+//   variantName: string
+//   variantId: number
+//   images: string[]
+//   size: string[]
+//   color: string
+// }
+>>>>>>> result_page
 
 export interface FilterData {
   sizes?: Set<string>

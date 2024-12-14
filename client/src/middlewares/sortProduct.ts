@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { ResultData } from '@interfaces/results.interface'
+=======
+import { ResultData } from '@interfaces/res.interface'
+>>>>>>> result_page
 
 export function sortProduct(
   data: ResultData[],

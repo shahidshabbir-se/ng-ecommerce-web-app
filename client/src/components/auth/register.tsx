@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
+<<<<<<< HEAD
 import { registerUser } from '@utils/auth/register'
+=======
+import { registerUser } from '../../services/auth/register'
+>>>>>>> result_page
 import { CreateUser } from '@interfaces/auth.interfaces'
 
 const Register: React.FC = () => {

@@ -103,7 +103,11 @@ export default function MegaMenu() {
                         key={menuItem.menuLabel}
                         className='min-w-[20%] pr-[60px]'
                       >
+<<<<<<< HEAD
                         <h3 className='my-3 px-1.5 font-chronicle text-lg uppercase leading-[18px]'>
+=======
+                        <h3 className='font-chronicle my-3 px-1.5 text-lg uppercase leading-[18px]'>
+>>>>>>> result_page
                           {menuItem.menuLabel}
                         </h3>
                         <hr className='mb-3 ml-1.5 h-0 w-[30px] border border-[#CFCFCF]' />
@@ -129,7 +133,11 @@ export default function MegaMenu() {
                     ))}
                     {menu.menuOffers && (
                       <div className='w-1/4 pr-[60px]'>
+<<<<<<< HEAD
                         <h3 className='my-3 px-1.5 font-chronicle text-lg uppercase leading-[18px]'>
+=======
+                        <h3 className='font-chronicle my-3 px-1.5 text-lg uppercase leading-[18px]'>
+>>>>>>> result_page
                           Special Offers:
                         </h3>
                         <hr className='mb-3 ml-1.5 h-0 w-[30px] border border-[#CFCFCF]' />

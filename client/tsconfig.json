@@ -21,13 +21,15 @@
     "paths": {
       "@app/*": ["./src/app/*"],
       "@components/*": ["./src/components/*"],
+      "@shared_interfaces/*": ["../shared/interfaces/*"],
       "@interfaces/*": ["./src/interfaces/*"],
       "@data/*": ["./src/data/*"],
-      "@utils/*": ["./src/utils/*"],
+      "@api/*": ["./src/services/api/*"],
       "@services/*": ["./src/services/*"],
       "@store/*": ["./src/store/*"],
       "@middlewares/*": ["./src/middlewares/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"],
       "@icons": ["./src/icons.tsx"]
     }
   },

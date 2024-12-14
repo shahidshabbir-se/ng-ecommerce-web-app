@@ -4,13 +4,17 @@ import React, { useEffect, useState, ChangeEvent } from 'react'
 import { Fragment } from 'react'
 import icons from '@icons'
 import AccordionUsage from './accordion'
-import getProduct from '@utils/product/getProduct.utils'
+import getProduct from '../../../../../services/product/getProduct.utils'
 import { productData } from '@interfaces/getProductData.interfaces'
 import Variants from './variants'
 import ProductImages from './productImages'
 import BreadCrumbs from '@components/specific/productPage/breadCrumbs'
 import { usePathname } from 'next/navigation'
+<<<<<<< HEAD
 import { updateAddToCart } from '@utils/cart/updateAddToCart'
+=======
+import { updateAddToCart } from '../../../../../services/cart/updateAddToCart'
+>>>>>>> result_page
 import { AddToCart } from '@interfaces/cart.interfaces'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
@@ -292,7 +296,11 @@ const ProductPage = () => {
                     <button
                       onClick={handleAddToCart}
                       disabled={isDisabled}
+<<<<<<< HEAD
                       className='size-full rounded-full bg-[#444444] font-extraBold text-xl uppercase leading-4 text-white disabled:bg-[#E5E7EB] disabled:text-[#6B7280]'
+=======
+                      className='font-extraBold size-full rounded-full bg-[#444444] text-xl uppercase leading-4 text-white disabled:bg-[#E5E7EB] disabled:text-[#6B7280]'
+>>>>>>> result_page
                     >
                       Add to Bag
                     </button>

@@ -3,34 +3,28 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'NG-Grotesque-Regular';
-  font-weight: 400;
-  src: url(/fonts/NG-Grotesque-Regular.woff2);
+  font-family: 'Apercu-Pro-Medium';
+  font-weight: 500;
+  src: url(/fonts/Apercu-Pro-Medium.otf);
 }
 
 @font-face {
-  font-family: 'NG-Grotesque-Bold';
+  font-family: 'Apercu-Pro-Bold';
   font-weight: 700;
-  src: url(/fonts/NG-Grotesque-Bold.woff2);
+  src: url(/fonts/Apercu-Pro-Bold.otf);
 }
 
 @font-face {
-  font-family: 'NG-Grotesque-ExtraBold';
-  font-weight: 800;
-  src: url(/fonts/NG-Grotesque-ExtraBold.woff2);
-}
-
-@font-face {
-  font-family: Chronicle;
+  font-family: 'Apercu-Pro-Regular';
   font-weight: 400;
-  src: url(/fonts/Chronicle.woff2);
+  src: url(/fonts/Apercu-Pro-Regular.otf);
 }
 
 body {
-  font-family: 'NG-Grotesque-Regular', 'Helvetica Neue', 'Helvetica', 'Arial',
+  font-family: 'Apercu-Pro-Regular', 'Helvetica Neue', 'Helvetica', 'Arial',
     'Nimbus Sans L', 'Liberation Sans', sans-serif;
   font-size: 14px;
   line-height: 20px;
-   color: #111213;
-   overflow-x: hidden;
+  color: #111213;
+  overflow-x: hidden;
 }

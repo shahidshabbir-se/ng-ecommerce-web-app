@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { LoginUser } from '@interfaces/auth.interfaces'
+<<<<<<< HEAD
 import { loginUser } from '@utils/auth/login.utils'
+=======
+import { loginUser } from '../../services/auth/login.utils'
+>>>>>>> result_page
 
 const Login: React.FC = () => {
   const [loginUserCredentials, setLoginUserCredentials] = useState<LoginUser>({

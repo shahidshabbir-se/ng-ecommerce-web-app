@@ -1,19 +1,17 @@
-export interface productData {
+export interface productSearchByTerm {
   productId: number
   productName: string
   productDescription: string
-  // productVariants?:
-  brand: {
-    brandName: string
-    brandImage?: string
-  }
   categoryId: number
   regPrice: number
   salePrice: number
+  brand: {
+    brnadId: number
+    brandName: string
+  }
   productVariants: {
     variantId: number
     variantName: string
-    variantImage: string
     images: string[]
   }[]
 }

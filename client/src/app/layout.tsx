@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Bar from '@components/bar/bar'
+import ClientLoader from '@components/ClientLoader'
 
 export const metadata: Metadata = {
   title: "Women's Clothes | Women's Fashion Online | Nasty Gal",
@@ -18,9 +19,11 @@ export default function RootLayout({
       <head>
         <link rel='icon' href='/favicon.svg' type='image/x-icon' />
       </head>
-      <body className='border-[#2222221a] bg-[url("https://uk.p448.com/cdn/shop/files/CTA-SINGLE_4200x2940_DSK-P448-US-UK.jpg?v=1731687329&width=4200")] bg-cover dark:bg-[#313131] dark:text-white'>
+      <body className='border-[#2222221a] bg-[#E6E3E6] dark:bg-[#222222] dark:text-white'>
+        <ClientLoader />
         <Bar />
-        {children}
+        <hr className='fixed left-[201px] hidden h-screen w-[1px] bg-[#d1ced1] lg:block dark:bg-[#ffffff1a]' />
+        <main className='lg:mt-[30px] lg:pl-[202px]'>{children}</main>
       </body>
     </html>
   )

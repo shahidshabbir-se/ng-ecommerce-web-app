@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import getCategory from '@utils/category/getCategory.utils'
+import getCategory from '../../../services/category/getCategory.utils'
 import { categoryData } from '@interfaces/categoryData.interfaces'
 import Link from 'next/link'
 

@@ -5,11 +5,12 @@ import { PiUserThin } from 'react-icons/pi'
 import { GoHomeFill } from 'react-icons/go'
 import { IoCloseOutline } from 'react-icons/io5'
 import { FaChevronDown } from 'react-icons/fa6'
-import { IoFilterSharp } from 'react-icons/io5'
+import { BsFilterRight } from 'react-icons/bs'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { AiOutlineMinus } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
 import { RxHamburgerMenu } from 'react-icons/rx'
+import { TiArrowRight } from 'react-icons/ti'
 
 const icons = {
   cart: IoBagOutline,
@@ -19,11 +20,12 @@ const icons = {
   chevron: FaChevronDown,
   home: GoHomeFill,
   cross: IoCloseOutline,
-  filter: IoFilterSharp,
+  filter: BsFilterRight,
   plus: AiOutlinePlus,
   minus: AiOutlineMinus,
   google: FcGoogle,
-  menu: RxHamburgerMenu
+  menu: RxHamburgerMenu,
+  arrow: TiArrowRight
 }
 
 export default icons
