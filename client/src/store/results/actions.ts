@@ -1,11 +1,11 @@
+import { ProductSearchByTerm } from '@shared_interfaces/productSearchByTerm.interfaces'
 import { useResultStore } from './store'
-import { ResultData } from '@interfaces/results.interface'
 
-const setResultsData = (data: ResultData[]) => {
+const setResultsData = (data: ProductSearchByTerm[]) => {
   useResultStore.setState({ resultData: data })
 }
 
-const setOriginalData = (data: ResultData[]) => {
+const setOriginalData = (data: ProductSearchByTerm[]) => {
   useResultStore.setState({ originalData: data })
 }
 

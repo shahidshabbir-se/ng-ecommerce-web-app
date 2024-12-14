@@ -15,17 +15,21 @@ export function filterProduct(data: ResultData[], filter: FilterData) {
     }
   }
 
-  if(categories){if (categories.size > 0) {
-    filteredData = filteredData.filter((product) => {
-      return categories.has(product.categoryName)
-    })
-  }}
+  if (categories) {
+    if (categories.size > 0) {
+      filteredData = filteredData.filter((product) => {
+        return categories.has(product.categoryName)
+      })
+    }
+  }
 
-  if(brands){if (brands.size > 0) {
-    filteredData = filteredData.filter((product) => {
-      return brands.has(product.brandName)
-    })
-  }}
+  if (brands) {
+    if (brands.size > 0) {
+      filteredData = filteredData.filter((product) => {
+        return brands.has(product.brandName)
+      })
+    }
+  }
 
   if (priceRange) {
     filteredData = filteredData.filter((product) => {
@@ -45,6 +49,5 @@ export function filterProduct(data: ResultData[], filter: FilterData) {
       )
     })
   }
-
   return filteredData
 }

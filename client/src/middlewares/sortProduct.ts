@@ -1,4 +1,4 @@
-import { ResultData } from '@interfaces/results.interface'
+import { ResultData } from '@interfaces/res.interface'
 
 export function sortProduct(
   data: ResultData[],

@@ -1,62 +1,38 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "noEmit": true,
-    "esModuleInterop": true,
+    "incremental": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@app/*": [
-        "./src/app/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@interfaces/*": [
-        "./src/interfaces/*"
-      ],
-      "@data/*": [
-        "./src/data/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@services/*": [
-        "./src/services/*"
-      ],
-      "@store/*": [
-        "./src/store/*"
-      ],
-      "@middlewares/*": [
-        "./src/middlewares/*"
-      ]
+      "@app/*": ["./src/app/*"],
+      "@components/*": ["./src/components/*"],
+      "@shared_interfaces/*": ["../shared/interfaces/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@data/*": ["./src/data/*"],
+      "@api/*": ["./src/services/api/*"],
+      "@services/*": ["./src/services/*"],
+      "@store/*": ["./src/store/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@icons": ["./src/icons.tsx"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/app/product/page.tsx",
-    "src/app/results/page.jsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

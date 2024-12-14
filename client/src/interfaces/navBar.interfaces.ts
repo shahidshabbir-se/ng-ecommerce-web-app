@@ -8,4 +8,3 @@ export interface UsedIcon {
   icon: string
   href: string
 }
-

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
-import icons from '@data/generator/icon.generator'
+import icons from '@icons'
 import { useSearchVisibilityStore } from '@store/index'
 
 export const LowerBar = () => {

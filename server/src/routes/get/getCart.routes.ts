@@ -3,13 +3,14 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function getCartItems(req: Request, res: Response) {
+export async function getCartItems(req: Request, res: Response): Promise<void> {
   try {
     const userId = Number(req.query.userId)
     if (!userId || isNaN(userId)) {
-      return res
+      res
         .status(400)
         .json({ message: 'User ID parameter is missing or invalid' })
+      return
     }
 
     // Find cart with cartItems and their associated products
@@ -20,48 +21,66 @@ export async function getCartItems(req: Request, res: Response) {
       include: {
         cartItems: {
           include: {
-            Product: true
+            Product: {
+              select: {
+                productId: true,
+                productName: true,
+                salePrice: true,
+                regPrice: true,
+                productVariants: {
+                  select: {
+                    variantId: true,
+                    color: true,
+                    images: true,
+                    size: true,
+                    variantName: true,
+                    stock: true
+                  }
+                }
+              }
+            }
           }
         }
       }
     })
 
     if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' })
+      res.status(404).json({ message: 'Cart not found' })
+      return
     }
 
     // Identify cart items with quantity 0
-    const itemsToDelete = cart.cartItems.filter(
-      (cartItem) => cartItem.quantity === 0
-    )
-
-    // Delete cart items with quantity 0
-    if (itemsToDelete.length > 0) {
-      await prisma.cartProduct.deleteMany({
-        where: {
-          OR: itemsToDelete.map((item) => ({
-            cartProductId: item.cartProductId
-          }))
+    const products = cart.cartItems
+      .filter((cartItem) => cartItem.quantity > 0)
+      .map((cartItem) => {
+        return {
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+          product: {
+            id: cartItem.Product.productId,
+            name: cartItem.Product.productName,
+            color: cartItem.Product.productVariants.find(
+              (variant) => variant.variantId === cartItem.variantId
+            )?.color,
+            salePrice: cartItem.Product.salePrice,
+            regPrice: cartItem.Product.regPrice,
+            imageUrl: cartItem.Product.productVariants.find(
+              (variant) => variant.variantId === cartItem.variantId
+            )?.images[0],
+            size: cartItem.Product.productVariants.find(
+              (variant) => variant.variantId === cartItem.variantId
+            )?.size,
+            variantName: cartItem.Product.productVariants.find(
+              (variant) => variant.variantId === cartItem.variantId
+            )?.variantName,
+            variantId: cartItem.variantId
+          }
         }
       })
-    }
 
-    // Extract and format products from cartItems
-    const products = cart.cartItems
-      .filter((cartItem) => cartItem.quantity > 0) // Filter out items with quantity 0
-      .map((cartItem) => ({
-        cartId: cart.cartId,
-        userId: cart.userId,
-        cartItemId: cartItem.cartProductId,
-        productId: cartItem.productId,
-        quantity: cartItem.quantity
-      }))
-
-    return res.json(products)
+    res.json(products)
   } catch (error) {
     console.error('Error retrieving products from cart:', error)
-    return res
-      .status(500)
-      .json({ message: 'Error retrieving products from cart' })
+    res.status(500).json({ message: 'Error retrieving products from cart' })
   }
 }

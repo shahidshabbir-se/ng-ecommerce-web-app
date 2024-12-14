@@ -12,12 +12,12 @@ model User {
   firstName    String
   lastName     String
   email        String    @unique
-  password     String
+  password     String?
   addresses    Address[]
   orders       Order[]
   salt         String
   profileImage String?
-  refreshToken String?
+  googleId     String?
   cart         Cart?
   wishlist     Wishlist?
   createdAt    DateTime  @default(now())
@@ -34,15 +34,16 @@ model Cart {
 }
 
 model CartProduct {
-  cartProductId    Int      @id @default(autoincrement())
-  cartId           Int
-  cart             Cart     @relation(fields: [cartId], references: [cartId])
-  variantId        Int // Directly referencing the product variant
-  quantity         Int
-  Product          Product @relation(fields: [productId], references: [productId])
-  productId        Int
+  cartProductId Int     @id @default(autoincrement())
+  cartId        Int
+  cart          Cart    @relation(fields: [cartId], references: [cartId])
+  variantId     Int
+  size          String
+  quantity      Int
+  Product       Product @relation(fields: [productId], references: [productId])
+  productId     Int
 
-  @@unique([cartId, variantId])
+  @@unique([cartId, productId, variantId, size])
 }
 
 model Product {
@@ -60,25 +61,26 @@ model Product {
   regPrice           Float
   salePrice          Float?
   orders             Order[]
-  productCategory    Category         @relation(fields: [categoryId], references: [categoryId])
-  cartProducts       CartProduct[] // Relationship to cart products
-  createdAt          DateTime         @default(now())
-  updatedAt          DateTime         @updatedAt
-  wishlistId         Int?
-  wishlist           Wishlist?        @relation(fields: [wishlistId], references: [wishlistId])
-  couponId           Int?
-  coupon             Coupon?          @relation(fields: [couponId], references: [couponId])
+
+  productCategory Category      @relation(fields: [categoryId], references: [categoryId])
+  cartProducts    CartProduct[] // Relationship to cart products
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  wishlistId      Int?
+  wishlist        Wishlist?     @relation(fields: [wishlistId], references: [wishlistId])
+  couponId        Int?
+  coupon          Coupon?       @relation(fields: [couponId], references: [couponId])
 }
 
 model ProductVariant {
-  variantId    Int      @id @default(autoincrement())
-  productId    Int
-  product      Product? @relation(fields: [productId], references: [productId])
-  variantName  String
-  images       String[]
-  stock        Int
-  color        String
-  size         String[]
+  variantId   Int      @id @default(autoincrement())
+  productId   Int
+  product     Product? @relation(fields: [productId], references: [productId])
+  variantName String
+  images      String[]
+  stock       Int
+  color       String
+  size        String[]
 
   @@unique([productId, variantName, color, size])
 }
@@ -97,7 +99,7 @@ model Review {
 
 model Category {
   categoryId          Int        @id @default(autoincrement())
-  categoryName        String
+  categoryName        String     @unique
   categoryDescription String?
   parentId            Int?
   parent              Category?  @relation("categoryIdToParentId", fields: [parentId], references: [categoryId])
@@ -109,7 +111,7 @@ model Category {
 
 model Brand {
   brandId          Int       @id @default(autoincrement())
-  brandName        String
+  brandName        String    @unique
   brandDescription String?
   brandImage       String?
   products         Product[] @relation("brandIdToProduct")
@@ -131,17 +133,29 @@ model Address {
   updatedAt    DateTime @default(now())
 }
 
+model OrderProduct {
+  orderProductId Int      @id @default(autoincrement())
+  productId      Int
+  variantId      Int
+  size           String
+  quantity       Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  Order          Order[]
+}
+
 model Order {
-  orderId     Int       @id @default(autoincrement())
+  orderId     Int            @id @default(autoincrement())
   userId      Int
-  products    Product[]
+  products    OrderProduct[]
   orderTotal  Float
-  user        User      @relation(fields: [userId], references: [userId])
+  user        User           @relation(fields: [userId], references: [userId])
   orderStatus String
-  address     Address   @relation(fields: [addressId], references: [addressId])
+  address     Address        @relation(fields: [addressId], references: [addressId])
   addressId   Int
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  Product     Product[]
 }
 
 model Wishlist {

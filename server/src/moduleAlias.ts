@@ -5,10 +5,11 @@ function setupModuleAliases(): void {
   moduleAlias.addAliases({
     '@configs': __dirname + '/configs',
     '@routes': __dirname + '/routes',
-    '@interfaces': __dirname + '/interfaces',
+    '@interfaces': './../shared/interfacess',
     '@middlewares': __dirname + '/middlewares',
     '@services': __dirname + '/services',
-    '@auth': __dirname + '/auth'
+    '@auth': __dirname + '/auth',
+    '@utils': __dirname + '/services'
   })
 }
 

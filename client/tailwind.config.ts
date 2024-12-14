@@ -1,6 +1,7 @@
-import type {Config} from 'tailwindcss'
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: 'selector', // add this line
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -17,10 +18,9 @@ const config: Config = {
       '2xl': '24px'
     },
     fontFamily: {
-      regular: ['NG-Grotesque-Regular', 'sans-serif'],
-      bold: ['NG-Grotesque-Bold', 'sans-serif'],
-      extraBold: ['NG-Grotesque-ExtraBold', 'sans-serif'],
-      chronicle: ['Chronicle', 'serif']
+      regular: ['Apercu-Pro-Regular', 'sans-serif'],
+      bold: ['Apercu-Pro-Bold', 'sans-serif'],
+      medium: ['Apercu-Pro-Medium', 'sans-serif']
     },
     extend: {
       colors: {
@@ -35,9 +35,10 @@ const config: Config = {
         'gray-900': '#111213',
         'bar-100': '#f5f5f5',
         black: '#000000',
-        'red-400':'#EF4444',
+        'red-400': '#EF4444',
         'red-500': '#e00034',
-        'pink-500': '#e12369',
+        'pink-500': '#FC2073',
+        'dark-bg': '#313131',
         'slate-500': '#737373'
       },
       boxShadow: {
